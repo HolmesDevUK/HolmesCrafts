@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Notebooks - Holmes Crafts{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/notebooks.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="pageTitle">Notebooks</h1>
+{% for notebook in notebooks %}
+    <a class="pageLink" href="{% url "notebook_shop_page" notebook.slug %}">
+        <div class="NotebookInfo">
+            <img class="NotebookMain" src="{{ notebook.images.front_cover.url }}" alt="{{ notebook.name }}">
+            <p class="Notebookinfo">{{ notebook.name }}</p>
+            <p class="Notebookinfo">Size: {{ notebook.size }}</p>
+            <p class="Notebookinfo">Price: &pound;{{ notebook.price }}</p>
+        </div>
+    </a>
+    {% endfor %}
+{% endblock %}

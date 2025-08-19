@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ card.name }} - Holmes Crafts{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/card_shop_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="shop_container">
+    <div class="small_images">
+        <button class="shop_img_button" onClick ="changeImg()"><img class="small_shop_img" id="wide_img" src="{{ card.images.wide_img.url }}"></button>
+        <button class="shop_img_button" onClick ="changeImg()"><img class="small_shop_img" id="tall_img" src="{{ card.images.tall_img.url }}"></button>
+        <button class="shop_img_button" onClick ="changeImg()"><img class="small_shop_img" id="small_img" src="{{ card.images.small_img.url }}"></button>
+        {% if card.images.inside_img %}
+        <button class="shop_img_button" id="small_img4" onClick ="changeImg()"><img class="small_shop_img" src="{{ card.images.inside_img.url }}"></button>
+        {% endif %}
+    </div>
+    <div class = "shop_img_container">
+        <img class="shop_img" id="shop_img" src="{{ card.images.wide_img.url }}">
+    </div>
+    <div class="item_details" id="item_details">
+        <p class="shop_card_name">{{ card.name }}</p>
+        <p class="shop_card_size">Size: {{ card.size }}</p>
+        <p class="shop_card_price">Price: £{{ card.price }}</p>
+        {% if card.has_variants %}
+        <div class="color_var">
+            <button class="color_var_btn" id="color_var_btn">Pick a Color Variant</button>
+            <div class="color_var_dropdown">
+                {% for variant in card.variants.all %}
+                    <a onClick ='colorVar("{{ variant.variant_img.url }}", "{{variant.variant_name}}", "{{ card.name }}", "{{ card.code }}")'>{{ variant.variant_name }}</a>
+                {% endfor %}
+            </div>
+       </div>
+       {% endif %}
+        {% if not card.has_variants %}
+            <p class="quantity_name">Quantity</p>
+            <form class="add_to_cart_form" action="{% url "basket" %}" method="POST">
+                {% csrf_token %}
+                <input id="quantity" type="number" min="0" value="0" name="quantity">
+                <input type="hidden" value={{ card.images.small_img.url }} name="product_img">
+                <input type="hidden" value="{{ card.name }}" name="product_name">
+                <input type="hidden" value={{ card.price }} name="product_price">
+                <input type="hidden" value={{ card.code }} name="product_code">
+                <button class="add_to_basket" type="submit">Add to cart</button>
+            </form>
+        {% else %}
+            <p class="quantity_name hidden" id="card_var_quantity">Quantity</p>
+            <form class="hidden" id="card_var_form" action="{% url "basket" %}" method="POST">
+                {% csrf_token %}
+                <input id="quantity" type="number" min="0" value="0" name="quantity">
+                <input id="card_var_img" type="hidden" value={{ card.images.small_img.url }} name="product_img">
+                <input id="card_var_name" type="hidden" value="{{ card.name }}" name="product_name">
+                <input type="hidden" value={{ card.price }} name="product_price">
+                <input id="card_var_code" type="hidden" value="{{ card.code }}" name="product_code">
+                <button class="add_to_basket" type="submit">Add to cart</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static "holmescraftsuk/scripts/shop_page.js" %}"></script>
+{% endblock %}

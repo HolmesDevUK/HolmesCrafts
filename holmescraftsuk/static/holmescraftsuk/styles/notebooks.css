@@ -1,0 +1,35 @@
+.pageTitle {
+    color: #954ECA;
+    text-align: center;
+    font-size: 60px;
+    text-decoration: underline;
+}
+
+.pageLink {
+    text-decoration: none;
+    display:block;
+    color: black;
+}
+    
+    
+.pageLink:hover {
+    color: #954ECA;
+}
+
+.NotebookInfo {
+	float: left;
+	margin: 0.5%;
+	width: 13%;
+	height: 500px;
+	border: #954ECA solid 1px;
+}
+
+.NotebookMain {
+	width: 98%;
+	margin: 1%;
+}
+
+.Notebookinfo {
+	font-size: 20px;
+	text-align: center;
+}

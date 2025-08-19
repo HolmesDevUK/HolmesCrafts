@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Basket - Holmes Crafts{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/basket.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="basket_container" id="basket_container">
+    <h1 id="basket">Basket</h1>
+    <table class"basket_table" Id="basket_table">
+        <tr>
+            <th colspan="2">Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Remove</th>
+        </tr>
+        {% for product_code, product in cart.items %}
+            <tr class="table_row">
+                <td class="basket_img"><img class="basket_image" src={{ product.image }}></td>
+                <td class="basket_name">{{ product.name }}</td>
+                <td class="basket_price">£{{ product.price }}</td>
+                <td class="quantity">{{ product.quantity }}</td>
+                <td class="totals">£{{ product.total }}</td>
+                <td>
+                    <form action={% url "basket_remove" %} method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ product_code }}" name="product_code">
+                        <button type="submit" class="remove_button"><img class="remove_img" src="{% static "holmescraftsuk/images/remove-icon.png" %}"></button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% if basket_empty %}
+        <p id="empty_basket">The Basket is currently empty</p>
+    {% else %}
+        <table class="order_total_table">
+            <tr>
+                <th class="order_total">Order Total</th>
+            </tr>
+            <tr>
+                <td id="order_total">£{{ order_total }}</td>
+            </tr>
+        </table>
+    <br><br>
+        <form class="to_checkout_form" action={% url "checkout" %} method="POST">
+            {% csrf_token %}
+            <button type="submit" class="to_checkout">Checkout</button>
+        </form>
+    {% endif %}
+    <br><br>
+</div>
+{% endblock %}

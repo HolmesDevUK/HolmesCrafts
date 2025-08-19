@@ -1,0 +1,61 @@
+.Sections {
+    float: left;
+    width: 47%;
+    height: 700px;
+    margin: 1%;
+    border-style: solid;
+    border-color: #954ECA;
+    border-radius: 100px;
+}
+    
+.PageName{
+    Text-align: center;
+    Font-size: 40px;
+}
+    
+.egcards{
+    position: relative;
+    margin-left: 10%;
+    padding-bottom: 5%;
+    height: 500px;
+}
+    
+.leftfeatured { 
+    width: 30.5%;
+    margin: 1%;
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    transform: rotate(-20deg);
+    box-shadow: 0 0  50px 5px #EFE5F7;
+}
+    
+.midfeatured {
+    width: 30.5%;
+    margin: 1%;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    z-index: 1;
+    box-shadow: 0 0  50px 5px #EFE5F7;
+}
+    
+.rightfeatured {
+    width: 30.5%;
+    margin: 1%;
+    position: absolute;
+    top: 30%;
+    right: 20%;
+    transform: rotate(20deg);
+    box-shadow: 0 0  50px 5px #EFE5F7;
+}
+
+.pageLink {
+    text-decoration: none;
+    display:block;
+    color: black;
+}
+
+.pageLink:hover {
+    color: #954ECA;
+}

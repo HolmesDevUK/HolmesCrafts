@@ -1,0 +1,105 @@
+.shop_container {
+    width: 90%;
+    height: 1200px;
+    margin: 1% 5%;
+    border: 5px solid #954ECA;
+    display: flex;
+    justify-content: space-around;
+}
+
+.small_images {
+    display: flex;
+    margin: 2%;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 5%;
+    height: 90%;
+}
+
+.shop_img_container {
+    width: 40%;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.shop_img {
+    width: 98%;
+    border: 5px solid #954ECA;
+}
+
+.shop_img_button {
+    width: 100%;
+    border: 5px solid #954ECA;
+    background-color: #EFE5F7;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+    
+.small_shop_img {
+    width: 100%;
+    margin: 0;
+}
+
+
+.item_details {
+	width: 40%;
+    height: 1000px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding-top: 2%;
+}
+
+.shop_notebook_name {
+	font-size: 60px;
+    margin: 0;
+    margin-top: 1%;
+}
+
+.shop_notebook_size {
+	font-size: 30px;
+    margin: 0;
+    margin-top: 1%;
+}
+
+.shop_notebook_price {
+	font-size: 30px;
+    margin: 0;
+    margin-top: 1%;
+}
+
+.notebook_specs {
+	font-size: 25px;
+	text-align: left;
+}
+
+.quantity_name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#quantity{
+    width: 100px;
+}
+    
+.add_to_basket {
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+}
+
+.add_to_cart_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}

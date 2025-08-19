@@ -1,0 +1,34 @@
+{% load static %}
+
+<header>
+    <img class="logo" src="{% static "holmescraftsuk/images/logo.png" %}" alt="Holmes Crafts Logo">
+    <p class="madehow">All our cards are beautifully and <br> carefully handmade.</p>
+    <a class="basket" href="{% url "basket" %}"><img src="{% static "holmescraftsuk/images/basket-icon.png" %}" alt="Basket"></a>
+    <p id="cartNumber">{{ in_cart }}</p>
+    <nav>
+        <hr>
+        <ul>
+            {% for nav in nav_bar %}
+            {% if nav.page_name == current_page %}
+            <li class = "CurrentPage">{{ nav.page_name }}</li>
+            {% else %}
+            <li><a href="{% url nav.url %}">{{ nav.page_name }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            <div class = "dropdown">
+                <li> <a class = "Cardsdropdown">GREETING CARDS</a></li>
+                <div class= "DropdownContent">
+                    {% for nav in nav_bar_cards %}
+                    {% if nav.page_name == current_page.page_name %}
+                    <a class = "CurrentPage">{{ nav.page_name }}</a>
+                    {% else %}
+                    <a href="{% url "cards" nav.slug %}">{{ nav.page_name }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </ul>
+        <hr>
+    </nav>
+</header>

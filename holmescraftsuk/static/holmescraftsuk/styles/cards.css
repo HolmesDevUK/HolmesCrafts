@@ -1,0 +1,34 @@
+.pageTitle {
+    color: #954ECA;
+    text-align: center;
+    font-size: 60px;
+    text-decoration: underline;
+}
+
+.pageLink {
+    text-decoration: none;
+    display:block;
+    color: black; 
+}
+    
+.pageLink:hover {
+    color: #954ECA;
+}
+
+.cardInfo {
+    float: left;
+    margin: 0.5%;
+    width: 13%;
+    height: 500px;
+    border: #954ECA solid 1px;
+}
+
+.card {
+    width: 98%;
+    margin: 1%;
+}
+
+.info {
+    font-size: 20px;
+    text-align: center;
+}
