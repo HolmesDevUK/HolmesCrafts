@@ -12,4 +12,5 @@ class Navbar(models.Model):
         return self.page_name
 
     class Meta:
+        ordering = ["order"]
         verbose_name_plural = "Navbar pages"   
