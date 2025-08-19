@@ -42,17 +42,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'core',
-    'accounts',
-    'catalog',
-    'cart',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "adminsortable2",
     "holmescraftsuk",
+    "core",
+    "accounts",
+    "catalog",
+    "cart",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
