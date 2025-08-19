@@ -11,9 +11,13 @@ class Notebook(models.Model):
     front_img = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
     code = models.CharField(max_length=20, null=True, unique=True)
+    order = models.PositiveIntegerField(default=0, editable=False)
 
     def __str__(self):
         return f"{self.name} ({self.size})"
+    
+    class Meta:
+        ordering = ["order"]
     
 class NotebookImg(models.Model):
     notebook = models.OneToOneField(Notebook, on_delete=models.CASCADE, related_name="images")
@@ -50,9 +54,15 @@ class Card(models.Model):
     card_type = models.CharField(max_length=100, choices=CARD_TYPES)
     code = models.CharField(max_length=10, null=True, unique=True)
     is_featured = models.BooleanField(default=False)
+    order = models.PositiveIntegerField(default=0, editable=False)
 
     def __str__(self):
         return f"{self.name} ({self.code})"
+    
+    class Meta:
+        ordering = ["order"]
+    
+
     
 class CardImg(models.Model):
     card = models.OneToOneField(Card, on_delete=models.CASCADE, related_name="images")
@@ -71,9 +81,11 @@ class CardVariant(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name="variants")
     variant_name = models.CharField(max_length=100)
     variant_img = models.ImageField(upload_to="images")
+    order = models.PositiveIntegerField(default=0, editable=False)
 
     def __str__(self):
         return f"{self.card} ({self.variant_name})"
 
     class Meta:
+        ordering = ["order"]
         verbose_name_plural = "Card variants"    
