@@ -1,4 +1,21 @@
 from django.db import models
+import os
+import uuid
+from datetime import datetime
+
+def upload_to(instance, filename):
+    
+    app_name = instance._meta.app_label
+    folder_name = instance.__class__.__name__.lower()
+    
+    
+    ext = filename.split('.')[-1]
+    filename = f"{uuid.uuid4().hex}.{ext}"
+    
+    
+    date_path = datetime.now().strftime("%Y/%m/%d")
+    
+    return os.path.join(app_name, folder_name, date_path, filename)
 
 
 class Notebook(models.Model):
@@ -21,13 +38,13 @@ class Notebook(models.Model):
     
 class NotebookImg(models.Model):
     notebook = models.OneToOneField(Notebook, on_delete=models.CASCADE, related_name="images")
-    open_cover = models.ImageField(upload_to="images")
-    front_cover = models.ImageField(upload_to="images")
-    back_cover = models.ImageField(upload_to="images")
-    inside_front = models.ImageField(upload_to="images")
-    inside_back = models.ImageField(upload_to="images")
-    middle = models.ImageField(upload_to="images")
-    zoom_middle = models.ImageField(upload_to="images")
+    open_cover = models.ImageField(upload_to=upload_to)
+    front_cover = models.ImageField(upload_to=upload_to)
+    back_cover = models.ImageField(upload_to=upload_to)
+    inside_front = models.ImageField(upload_to=upload_to)
+    inside_back = models.ImageField(upload_to=upload_to)
+    middle = models.ImageField(upload_to=upload_to)
+    zoom_middle = models.ImageField(upload_to=upload_to)
 
     def __str__(self):
         return f"{self.notebook} images"
@@ -66,10 +83,10 @@ class Card(models.Model):
     
 class CardImg(models.Model):
     card = models.OneToOneField(Card, on_delete=models.CASCADE, related_name="images")
-    wide_img = models.ImageField(upload_to="images", null=True, blank=True)
-    tall_img = models.ImageField(upload_to="images", null=True, blank=True)
-    small_img = models.ImageField(upload_to="images", null=True, blank=True)
-    inside_img = models.ImageField(upload_to="images", null=True, blank=True)
+    wide_img = models.ImageField(upload_to=upload_to, null=True, blank=True)
+    tall_img = models.ImageField(upload_to=upload_to, null=True, blank=True)
+    small_img = models.ImageField(upload_to=upload_to, null=True, blank=True)
+    inside_img = models.ImageField(upload_to=upload_to, null=True, blank=True)
 
     def __str__(self):
         return f"{self.card} images"
@@ -80,7 +97,7 @@ class CardImg(models.Model):
 class CardVariant(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name="variants")
     variant_name = models.CharField(max_length=100)
-    variant_img = models.ImageField(upload_to="images")
+    variant_img = models.ImageField(upload_to=upload_to)
     order = models.PositiveIntegerField(default=0, editable=False)
 
     def __str__(self):
