@@ -22,5 +22,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("holmescraftsuk.urls"))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("", include(("core.urls", "core"), namespace = "core"), ),
+    path("", include(("accounts.urls", "accounts"), namespace = "accounts"), ),
+    path("", include(("catalog.urls", "catalog"), namespace = "catalog"), ),
+    path("basket/", include(("cart.urls", "cart"), namespace = "cart"), ),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
