@@ -1,3 +1,9 @@
 from django.contrib import admin
+from adminsortable2.admin import SortableAdminMixin
+from .models import Navbar
 
-# Register your models here.
+
+@admin.register(Navbar)
+class NavbarAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("page_name",)}
+    list_display = ("page_name", "url", "slug") 
