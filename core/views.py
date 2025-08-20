@@ -22,8 +22,5 @@ class HomeView(ListView):
         context["seasonal_cards"] = seasonal_cards
         context["special_cards"] = special_cards
         context["other_cards"] = other_cards
-        context["nav_bar"] = set_nav()
-        context["nav_bar_cards"] = set_nav_cards()
         context["current_page"] = "HOME"
-        context["in_cart"] = in_basket(self.request)
         return context
