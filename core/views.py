@@ -1,12 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic.base import TemplateView
 
 from catalog.models import Card, Notebook
 
-class HomeView(ListView):
+class HomeView(TemplateView):
     template_name = "holmescraftsuk/index.html"
-    model = Card
-    context_object_name = "cards"
 
     def get_context_data(self, **kwargs):
         notebooks = Notebook.objects.filter(is_featured=True)
