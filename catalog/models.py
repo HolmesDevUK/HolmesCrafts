@@ -40,11 +40,9 @@ class NotebookImg(models.Model):
     notebook = models.OneToOneField(Notebook, on_delete=models.CASCADE, related_name="images")
     open_cover = models.ImageField(upload_to=upload_to)
     front_cover = models.ImageField(upload_to=upload_to)
-    back_cover = models.ImageField(upload_to=upload_to)
     inside_front = models.ImageField(upload_to=upload_to)
     inside_back = models.ImageField(upload_to=upload_to)
     middle = models.ImageField(upload_to=upload_to)
-    zoom_middle = models.ImageField(upload_to=upload_to)
 
     def __str__(self):
         return f"{self.notebook} images"
