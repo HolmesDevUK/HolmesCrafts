@@ -14,8 +14,8 @@
         <button class="shop_img_button" id="small_img3" onClick ="changeImg()"><img class="small_shop_img" src="{{ notebook.images.inside_front.url }}"></button>
         <button class="shop_img_button" id="small_img4" onClick ="changeImg()"><img class="small_shop_img" src="{{ notebook.images.middle.url }}"></button>
         <button class="shop_img_button" id="small_img5" onClick ="changeImg()"><img class="small_shop_img" src="{{ notebook.images.inside_back.url }}"></button>
-        <button class="shop_img_button" id="small_img6" onClick ="changeImg()"><img class="small_shop_img" src="{{ notebook.images.back_cover.url }}"></button>
-        <button class="shop_img_button" id="small_img7" onClick ="changeImg()"><img class="small_shop_img" src="{{ notebook.images.zoom_middle.url }}"></button>
+        <button class="shop_img_button" id="small_img6" onClick ="changeImg()"><img class="small_shop_img" src="{% static 'catalog/images/Open-back-cover.jpg' %}"></button>
+        <button class="shop_img_button" id="small_img7" onClick ="changeImg()"><img class="small_shop_img" src="{% static 'catalog/images/Zoom-Middle.jpg' %}"></button>
     </div>
     <div class= "shop_img_container">
         <img class="shop_img" id="shop_img" src="{{ notebook.images.open_cover.url }}">
@@ -34,13 +34,13 @@
         </ul>
         
         <p class="quantity_name">Quantity</p>
-        <form class="add_to_cart_form" action="{% url "basket" %}" method="POST">
+        <form class="add_to_cart_form" action="{% url 'cart:basket' %}" method="POST">
             {% csrf_token %}
             <input id="quantity" type="number" min="0" value="0" name="quantity">
-            <input type="hidden" value={{ notebook.images.front_cover.url }} name="product_img">
+            <input type="hidden" value="{{ notebook.images.front_cover.url }}" name="product_img">
             <input type="hidden" value="{{ notebook.name }}" name="product_name">
-            <input type="hidden" value={{ notebook.price }} name="product_price">
-            <input type="hidden" value={{ notebook.code }} name="product_code">
+            <input type="hidden" value="{{ notebook.price }}" name="product_price">
+            <input type="hidden" value="{{ notebook.code }}" name="product_code">
             <button class="add_to_basket" type="submit">Add to cart</button>
         </form>
     </div>
@@ -48,5 +48,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static "holmescraftsuk/scripts/shop_page.js" %}"></script>
+<script src="{% static 'catalog/scripts/shop_page.js' %}"></script>
 {% endblock %}
