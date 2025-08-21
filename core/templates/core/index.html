@@ -1,23 +1,25 @@
 {% extends "base.html" %}
+
 {% load static %}
 
 {% block title %} Home | {{ block.super }} {% endblock %}
+
 {% block css %}
-<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/index.css' %}">
+<link rel="stylesheet" href="{% static 'core/styles/index.css' %}">
 {% endblock %}
 
 {% block content %}
-<a class="pageLink" href="{% url "notebooks" %}">
+<a class="pageLink" href="{% url 'catalog:notebooks' %}">
     <div class="Sections" id="Notebooks">
         <h2 class="PageName">Notebooks</h2>
         <div class="egcards">
-            <img class="leftfeatured" src={{ notebooks.0.images.front_cover.url }} alt="{{ notebooks.0.name }}">
-            <img class="midfeatured" src={{ notebooks.1.images.front_cover.url }} alt="{{ notebooks.1.name }}">
-            <img class="rightfeatured" src={{ notebooks.2.images.front_cover.url }} alt="{{ notebooks.2.name }}">
+            <img class="leftfeatured" src="{{ notebooks.0.images.front_cover.url }}" alt="{{ notebooks.0.name }}">
+            <img class="midfeatured" src="{{ notebooks.1.images.front_cover.url }}" alt="{{ notebooks.1.name }}">
+            <img class="rightfeatured" src="{{ notebooks.2.images.front_cover.url }}" alt="{{ notebooks.2.name }}">
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url "cards" "birthday-cards" %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'birthday-cards' %}">
     <div class="Sections" id="BirthdayCards">
         <h2 class="PageName">Birthday Cards</h2>
         <div class="egcards">
@@ -27,17 +29,17 @@
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url "cards" "wedding-and-anniversary-cards" %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'wedding-and-anniversary-cards' %}">
     <div class="Sections" id="WeddingCards">
         <h2 class="PageName">Wedding &amp; Anniversary Cards</h2>
         <div class="egcards">
-            <img class="leftfeatured" src="Images/Cards/C1T.jpg" alt="Piano Birthday Card">
-            <img class="midfeatured" src="Images/Cards/C9T.jpg" alt="Chess Birthday Card">
-            <img class="rightfeatured" src="Images/Cards/C5T.jpg" alt="Brick Wall Birthday Card">
+            <img class="leftfeatured" src="" alt="">
+            <img class="midfeatured" src="" alt="">
+            <img class="rightfeatured" src="" alt="">
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url "cards" "seasonal-cards" %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'seasonal-cards' %}">
     <div class="Sections" id="SeasonalCards">
         <h2 class="PageName">Seasonal Cards</h2>
         <div class="egcards">
@@ -47,23 +49,23 @@
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url "cards" "special-occasion-cards" %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'special-occasion-cards' %}">
     <div class="Sections" id="SpecialCards">
         <h2 class="PageName">Cards for Special Occasions</h2>
         <div class="egcards">
             <img class="leftfeatured" src="{{ special_cards.1.images.tall_img.url }}" alt="{{ seasonal_cards.1.name }}">
             <img class="midfeatured" src="{{ special_cards.0.images.tall_img.url }}" alt="{{ seasonal_cards.0.name }}">
-            <img class="rightfeatured" src="Images/Cards/C5T.jpg" alt="Brick Wall Birthday Card">
+            <img class="rightfeatured" src="" alt="">
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url "cards" "other-cards" %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'other-cards' %}">
     <div class="Sections" id="OtherCards">
         <h2 class="PageName">Other Cards</h2>
         <div class="egcards">
-            <img class="leftfeatured" src="Images/Cards/C16T.jpg" alt="Baby Girl Card">
-            <img class="midfeatured" src="Images/Cards/C10T.jpg" alt="New Home Card">
-            <img class="rightfeatured" src="Images/Cards/C5T.jpg" alt="Brick Wall Birthday Card">
+            <img class="leftfeatured" src="" alt="">
+            <img class="midfeatured" src="" alt="">
+            <img class="rightfeatured" src="" alt="">
         </div>
     </div>
 </a>
