@@ -1,19 +1,19 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Notebook, NotebookImg, Card, CardImg, CardVariant
+from .models import Notebook, NotebookImg, Card, CardImg, CardVariant, Size, PriceGroup
 
 
 @admin.register(Notebook)
 class NotebookAdmin(SortableAdminMixin, admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", "code",)}
-    list_display = ("name", "size", "price", "code",)
-    list_filter = ("name", "size", "price",)
+    list_display = ("name", "code",)
+    list_filter = ("name",)
 
 @admin.register(Card)
 class CardAdmin(SortableAdminMixin, admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", "code",)}
-    list_display = ("name", "code", "size", "price", "card_type")
-    list_filter = ("size", "price", "in_store", "has_variants", "card_type")    
+    list_display = ("name", "code", "card_type")
+    list_filter = ("in_store", "has_variants", "card_type")    
 
 @admin.register(CardVariant)
 class CardVariantAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -22,3 +22,5 @@ class CardVariantAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 admin.site.register(NotebookImg)
 admin.site.register(CardImg)
+admin.site.register(Size)
+admin.site.register(PriceGroup)

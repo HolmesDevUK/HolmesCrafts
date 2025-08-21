@@ -17,25 +17,59 @@ def upload_to(instance, filename):
     
     return os.path.join(app_name, folder_name, date_path, filename)
 
+class Size(models.Model):
+    name = models.CharField(max_length=20)
 
-class Notebook(models.Model):
-    name = models.CharField(max_length=100)
-    size = models.CharField(max_length=10)
+    def __str__(self):
+        return self.name
+
+class PriceGroup(models.Model):
+
+    PRODUCT_TYPES = (
+        ("notebook", "Notebook"),
+        ("card", "Card"),
+    )
+
+    product_type = models.CharField(max_length=100, choices=PRODUCT_TYPES)
+    size = models.ForeignKey(Size, on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.product_type} - ({self.size}) - £{self.price}"
+    
+class Product(models.Model):
+    name = models.CharField(max_length=100, default="")
+    price_group = models.ForeignKey(PriceGroup, on_delete=models.PROTECT, related_name="products")
     slug = models.SlugField(default="", blank=True, null=False, db_index=True)
-    theme = models.CharField(max_length=100)
-    page_img = models.CharField(max_length=100)
-    front_img = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
+    in_store = models.BooleanField(default=True)
+    has_variants = models.BooleanField(default=False)
     code = models.CharField(max_length=20, null=True, unique=True)
     order = models.PositiveIntegerField(default=0, editable=False)
 
     def __str__(self):
-        return f"{self.name} ({self.size})"
+        return f"{self.name} ({self.code})"
     
     class Meta:
         ordering = ["order"]
+
+    @property
+    def price(self):
+        return self.price_group.price
+
+    @property
+    def size(self):
+        return self.price_group.size   
     
+
+
+
+class Notebook(Product):
+    theme = models.CharField(max_length=100)
+    page_img = models.CharField(max_length=100)
+    front_img = models.CharField(max_length=100)
+
+
 class NotebookImg(models.Model):
     notebook = models.OneToOneField(Notebook, on_delete=models.CASCADE, related_name="images")
     open_cover = models.ImageField(upload_to=upload_to)
@@ -50,7 +84,7 @@ class NotebookImg(models.Model):
     class Meta:
         verbose_name_plural = "Notebook images"
 
-class Card(models.Model):
+class Card(Product):
 
     CARD_TYPES = (
         ("birthday", "Birthday"),
@@ -60,22 +94,7 @@ class Card(models.Model):
         ("other", "Other"),
     )
 
-    name = models.CharField(max_length=100)
-    size = models.CharField(max_length=10)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    slug = models.SlugField(default="", blank=True, null=False, db_index=True)
-    in_store = models.BooleanField(default=True)
-    has_variants = models.BooleanField(default=False)
     card_type = models.CharField(max_length=100, choices=CARD_TYPES)
-    code = models.CharField(max_length=10, null=True, unique=True)
-    is_featured = models.BooleanField(default=False)
-    order = models.PositiveIntegerField(default=0, editable=False)
-
-    def __str__(self):
-        return f"{self.name} ({self.code})"
-    
-    class Meta:
-        ordering = ["order"]
     
 
     
@@ -103,4 +122,5 @@ class CardVariant(models.Model):
 
     class Meta:
         ordering = ["order"]
-        verbose_name_plural = "Card variants"    
+        verbose_name_plural = "Card variants"
+
