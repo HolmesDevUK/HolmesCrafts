@@ -23,7 +23,7 @@
                     {% if nav.page_name == current_page.page_name %}
                     <a class = "CurrentPage">{{ nav.page_name }}</a>
                     {% else %}
-                    <a href="{% url "cards" nav.slug %}">{{ nav.page_name }}</a>
+                    <a href="{% url 'catalog:cards' nav.slug %}">{{ nav.page_name }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>
