@@ -3,13 +3,13 @@
 
 {% block title %} Notebooks | {{ block.super }} {% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/notebooks.css' %}">
+<link rel="stylesheet" href="{% static 'catalog/styles/notebooks.css' %}">
 {% endblock %}
 
 {% block content %}
 <h1 class="pageTitle">Notebooks</h1>
 {% for notebook in notebooks %}
-    <a class="pageLink" href="{% url "notebook_shop_page" notebook.slug %}">
+    <a class="pageLink" href="{% url 'catalog:notebook_shop_page' notebook.slug %}">
         <div class="NotebookInfo">
             <img class="NotebookMain" src="{{ notebook.images.front_cover.url }}" alt="{{ notebook.name }}">
             <p class="Notebookinfo">{{ notebook.name }}</p>

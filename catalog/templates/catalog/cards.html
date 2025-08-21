@@ -3,7 +3,7 @@
 
 {% block title %} {{ current_page.page_name|title }} Cards | {{ block.super }} {% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/cards.css' %}">
+<link rel="stylesheet" href="{% static 'catalog/styles/cards.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@
 {% for card in cards %}
     {% if card.card_type == current_page.page_name|title %}
         {% if card.in_store %}
-            <a class="pageLink" href="{% url "card_shop_page" current_page.slug card.slug %}">
+            <a class="pageLink" href="{% url 'catalog:card_shop_page' current_page.slug card.slug %}">
                 <div class="cardInfo">
                     <img class="card" src="{{ card.images.tall_img.url }}" alt="{{ card.name }}">
                     <p class="info">{{ card.name }}</p>
