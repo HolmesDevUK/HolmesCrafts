@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Holmes Crafts{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'base.css'%}">
-    <link rel="stylesheet" href="{% static 'holmescraftsuk/styles/includes/header.css'%}">
+    <link rel="stylesheet" href="{% static 'core/styles/includes/header.css'%}">
     {% block css %}{% endblock %}
 </head>
 <body>
-    {% include "holmescraftsuk/includes/header.html" %}
+    {% include "core/includes/header.html" %}
     <main class="MainContent">
         {% block content %}
 

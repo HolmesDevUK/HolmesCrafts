@@ -1,9 +1,9 @@
 {% load static %}
 
 <header>
-    <img class="logo" src="{% static "holmescraftsuk/images/logo.png" %}" alt="Holmes Crafts Logo">
+    <img class="logo" src="{% static 'core/images/logo.png' %}" alt="Holmes Crafts Logo">
     <p class="madehow">All our cards are beautifully and <br> carefully handmade.</p>
-    <a class="basket" href="{% url "basket" %}"><img src="{% static "holmescraftsuk/images/basket-icon.png" %}" alt="Basket"></a>
+    <a class="basket" href="{% url 'cart:basket' %}"><img src="{% static 'cart/images/logo.png/images/basket-icon.png' %}" alt="Basket"></a>
     <p id="cartNumber">{{ in_cart }}</p>
     <nav>
         <hr>
