@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} {{ notebook.name }} - Holmes Crafts{% endblock %}
+{% block title %} {{ notebook.name }} | {{ block.super }} {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'holmescraftsuk/styles/notebook_shop_page.css' %}">
 {% endblock %}

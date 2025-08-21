@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Basket - Holmes Crafts{% endblock %}
+{% block title %} Basket | {{ block.super }} {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'holmescraftsuk/styles/basket.css' %}">
 {% endblock %}

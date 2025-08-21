@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ current_page.page_name|title }} Cards - Holmes Crafts{% endblock %}
+{% block title %} {{ current_page.page_name|title }} Cards | {{ block.super }} {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'holmescraftsuk/styles/cards.css' %}">
 {% endblock %}
