@@ -1,5 +1,5 @@
 from .services import set_nav, set_nav_cards
-from cart.services import in_basket
+from cart.services import get_cart_count
 
 def set_nav_bar(request):
 
@@ -9,8 +9,8 @@ def set_nav_bar(request):
     }
 
 
-def in_basket(request):
+def cart_count(request):
 
     return {
-        "in_cart": in_basket(request)
+        "in_cart": get_cart_count(request)
     }

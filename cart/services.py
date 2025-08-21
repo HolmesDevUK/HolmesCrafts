@@ -1,6 +1,6 @@
 
 
-def in_basket(request):
+def get_cart_count(request):
     cart = request.session.get("cart", {})
     quantities_list = []
 
