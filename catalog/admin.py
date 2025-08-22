@@ -1,6 +1,6 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Product, Notebook, NotebookImg, Card, CardImg, CardVariant, Size, PriceGroup, Tag
+from .models import Product, Notebook, NotebookImg, Card, CardImg, CardVariant, Size, PriceGroup, Tag, ProductType, CardInsert, CardType
 
 @admin.register(Product)
 class ProductAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -38,3 +38,6 @@ class PriceGroupAdmin(SortableAdminMixin, admin.ModelAdmin):
 admin.site.register(NotebookImg)
 admin.site.register(CardImg)
 admin.site.register(Tag)
+admin.site.register(CardType)
+admin.site.register(CardInsert)
+admin.site.register(ProductType)

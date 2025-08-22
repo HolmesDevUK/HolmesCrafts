@@ -22,6 +22,9 @@ def upload_to(instance, filename):
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.name
+
 class Size(OrderingMixin, models.Model):
 
     ORIENTATION = (
@@ -30,7 +33,7 @@ class Size(OrderingMixin, models.Model):
     )
 
     name = models.CharField(max_length=20)
-    orientation = models.CharField(max_length=10, choices=ORIENTATION)
+    orientation = models.CharField(max_length=10, choices=ORIENTATION, default="portrait", null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.orientation}"
@@ -134,6 +137,6 @@ class CardVariant(OrderingMixin, models.Model):
     def __str__(self):
         return f"{self.card} ({self.variant_name})"
 
-    class Meta:
+    class Meta(OrderingMixin.Meta):
         verbose_name_plural = "Card variants"
 
