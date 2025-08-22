@@ -26,11 +26,8 @@ class BasketView(View):
             basket_empty = False    
 
         context = {
-            "nav_bar": set_nav(),
-            "nav_bar_cards": set_nav_cards(),
             "cart": cart,
             "basket_empty": basket_empty,
-            "in_cart": in_basket(self.request),
             "order_total": self.order_total(self.request)
         }
 
