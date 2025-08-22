@@ -1,6 +1,11 @@
 from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
-from .models import Notebook, NotebookImg, Card, CardImg, CardVariant, Size, PriceGroup
+from .models import Product, Notebook, NotebookImg, Card, CardImg, CardVariant, Size, PriceGroup, Tag
+
+@admin.register(Product)
+class ProductAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ("name", "size", "price_group", "code", "is_featured", "in_store",)
+    filter_horizontal = ("tags",)
 
 
 @admin.register(Notebook)
@@ -18,9 +23,18 @@ class CardAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(CardVariant)
 class CardVariantAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ("card", "variant_name",)
-    list_filter = ("card",)  
+    list_filter = ("card",)   
+
+@admin.register(Size)
+class SizeAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ("name", "orientation",)
+    list_filter = ("name", "orientation",)
+
+@admin.register(PriceGroup)
+class PriceGroupAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ("product_type", "size", "price",)
+    list_filter =  ("product_type", "size", "price",)
 
 admin.site.register(NotebookImg)
 admin.site.register(CardImg)
-admin.site.register(Size)
-admin.site.register(PriceGroup)
+admin.site.register(Tag)
