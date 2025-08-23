@@ -24,8 +24,8 @@
         <h2 class="PageName">Birthday Cards</h2>
         <div class="egcards">
             <img class="leftfeatured" src="{{ birthday_cards.0.images.tall_img.url }}" alt="{{ birthday_cards.0.name }}">
-            <img class="midfeatured" src="{{ birthday_cards.2.images.tall_img.url }}" alt="{{ birthday_cards.2.name }}">
-            <img class="rightfeatured" src="{{ birthday_cards.1.images.tall_img.url }}" alt="{{ birthday_cards.1.name }}">
+            <img class="midfeatured" src="{{ birthday_cards.1.images.tall_img.url }}" alt="{{ birthday_cards.1.name }}">
+            <img class="rightfeatured" src="{{ birthday_cards.2.images.tall_img.url }}" alt="{{ birthday_cards.2.name }}">
         </div>
     </div>
 </a>
@@ -33,9 +33,9 @@
     <div class="Sections" id="WeddingCards">
         <h2 class="PageName">Wedding &amp; Anniversary Cards</h2>
         <div class="egcards">
-            <img class="leftfeatured" src="" alt="">
-            <img class="midfeatured" src="" alt="">
-            <img class="rightfeatured" src="" alt="">
+            <img class="leftfeatured" src="{{ wedding_cards.0.images.tall_img.url }}" alt="{{ wedding_cards.0.name }}">
+            <img class="midfeatured" src="{{ wedding_cards.1.images.tall_img.url }}" alt="{{ wedding_cards.1.name }}">
+            <img class="rightfeatured" src="{{ wedding_cards.2.images.tall_img.url }}" alt="{{ wedding_cards.2.name }}">
         </div>
     </div>
 </a>
@@ -49,7 +49,7 @@
         </div>
     </div>
 </a>
-<a class="pageLink" href="{% url 'catalog:cards' 'special-occasions' %}">
+<a class="pageLink" href="{% url 'catalog:cards' 'special-occasion' %}">
     <div class="Sections" id="SpecialCards">
         <h2 class="PageName">Cards for Special Occasions</h2>
         <div class="egcards">

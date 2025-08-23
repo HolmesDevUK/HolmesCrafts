@@ -9,14 +9,14 @@
 {% block content %}
 <h1 class="pageTitle">{{ current_page.page_name|title }} Cards</h1>
 {% for card in cards %}
-    {% if card.card_type == current_page.page_name|title %}
+    {% if card.card_type.name == current_page.page_name|title %}
         {% if card.in_store %}
             <a class="pageLink" href="{% url 'catalog:card_shop_page' current_page.slug card.slug %}">
                 <div class="cardInfo">
                     <img class="card" src="{{ card.images.tall_img.url }}" alt="{{ card.name }}">
                     <p class="info">{{ card.name }}</p>
-                    <p class="info">Size: {{ card.size }}</p>
-                    <p class="info">Price: {{ card.price }}</p>
+                    <p class="info">Size: {{ card.size.name }}</p>
+                    <p class="info">Price: £{{ card.price }}</p>
                 </div>
             </a>
         {% endif %}

@@ -19,7 +19,7 @@ class NotebookAdmin(SortableAdminMixin, admin.ModelAdmin):
 class CardAdmin(SortableAdminMixin, admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name", "code",)}
     list_display = ("name", "code", "card_type")
-    list_filter = ("in_store", "has_variants", "card_type")    
+    list_filter = ("in_store", "has_variants", "card_type", "is_featured")    
 
 @admin.register(CardVariant)
 class CardVariantAdmin(SortableAdminMixin, admin.ModelAdmin):
