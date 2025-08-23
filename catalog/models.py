@@ -107,12 +107,13 @@ class Card(Product):
 
 class CardInsert(models.Model):
     card_type = models.ForeignKey(CardType, on_delete=models.PROTECT, related_name="card_inserts")
+    size = models.ForeignKey(Size, on_delete=models.PROTECT)
     message = models.CharField(max_length=100)
     picture = models.CharField(max_length=100)
     img = models.ImageField(upload_to=upload_to)
 
     def __str__(self):
-        return f"{self.card_type} - {self.picture}"
+        return f"{self.card_type} ({self.size.name}) - {self.picture} | {self.message}"
     
 
     

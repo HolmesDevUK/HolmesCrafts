@@ -5,6 +5,7 @@ from .models import Product, Notebook, NotebookImg, Card, CardImg, CardVariant, 
 @admin.register(Product)
 class ProductAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ("name", "size", "price_group", "code", "is_featured", "in_store",)
+    list_filter = ("price_group", "is_featured", "in_store", "card__card_type")
     filter_horizontal = ("tags",)
 
 
@@ -23,7 +24,12 @@ class CardAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(CardVariant)
 class CardVariantAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ("card", "variant_name",)
-    list_filter = ("card",)   
+    list_filter = ("card",)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "card":
+            kwargs["queryset"] = Card.objects.filter(has_variants=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(Size)
 class SizeAdmin(SortableAdminMixin, admin.ModelAdmin):
