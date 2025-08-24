@@ -21,7 +21,7 @@
     </div>
     <div class="item_details" id="item_details">
         <p class="shop_card_name">{{ card.name }}</p>
-        <p class="shop_card_size">Size: {{ card.size }}</p>
+        <p class="shop_card_size">Size: {{ card.size.name }}</p>
         <p class="shop_card_price">Price: £{{ card.price }}</p>
         {% if card.has_variants %}
         <div class="color_var">
@@ -35,23 +35,23 @@
        {% endif %}
         {% if not card.has_variants %}
             <p class="quantity_name">Quantity</p>
-            <form class="add_to_cart_form" action="{% url "basket" %}" method="POST">
+            <form class="add_to_cart_form" action="{% url 'cart:basket' %}" method="POST">
                 {% csrf_token %}
                 <input id="quantity" type="number" min="0" value="0" name="quantity">
-                <input type="hidden" value={{ card.images.small_img.url }} name="product_img">
+                <input type="hidden" value="{{ card.images.small_img.url }}" name="product_img">
                 <input type="hidden" value="{{ card.name }}" name="product_name">
-                <input type="hidden" value={{ card.price }} name="product_price">
-                <input type="hidden" value={{ card.code }} name="product_code">
+                <input type="hidden" value="{{ card.price }}" name="product_price">
+                <input type="hidden" value="{{ card.code }}" name="product_code">
                 <button class="add_to_basket" type="submit">Add to cart</button>
             </form>
         {% else %}
             <p class="quantity_name hidden" id="card_var_quantity">Quantity</p>
-            <form class="hidden" id="card_var_form" action="{% url "basket" %}" method="POST">
+            <form class="hidden" id="card_var_form" action="{% url 'cart:basket' %}" method="POST">
                 {% csrf_token %}
                 <input id="quantity" type="number" min="0" value="0" name="quantity">
-                <input id="card_var_img" type="hidden" value={{ card.images.small_img.url }} name="product_img">
+                <input id="card_var_img" type="hidden" value="{{ card.images.small_img.url }}"s name="product_img">
                 <input id="card_var_name" type="hidden" value="{{ card.name }}" name="product_name">
-                <input type="hidden" value={{ card.price }} name="product_price">
+                <input type="hidden" value="{{ card.price }}" name="product_price">
                 <input id="card_var_code" type="hidden" value="{{ card.code }}" name="product_code">
                 <button class="add_to_basket" type="submit">Add to cart</button>
             </form>
@@ -61,5 +61,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static "holmescraftsuk/scripts/shop_page.js" %}"></script>
+<script src="{% static 'catalog/scripts/shop_page.js' %}"></script>
 {% endblock %}
