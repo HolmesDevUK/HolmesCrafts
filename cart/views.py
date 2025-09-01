@@ -1,65 +1,37 @@
-from django.shortcuts import render, redirect
-from django.views import View
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import TemplateView
 from decimal import Decimal
 
-class BasketView(View):
-    def order_total(self, request):
-        cart = request.session.get("cart", {})
-        order_totals = []
+from catalog.models import Product
+from .models import CartItem
+from .utils import get_cart
 
-        for product_code, product in cart.items():
-            total = Decimal(product["total"])
-            order_totals.append(total)
+def add_to_cart(request, product_id):
+    cart = get_cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    qty = int(request.Post.get("quantity", 1))
 
-        order_total = sum(order_totals)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart.item.quantity += qty
+    else:
+        cart_item.quantity = qty
+    cart_item.save()
 
-        if order_total:
-            return order_total    
-          
+    return redirect("basket")
 
-    def get(self, request):
-        cart = request.session.get("cart", {})
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.delete()
+    return redirect("basket")      
 
-        if cart == {}:
-            basket_empty = True
-        else:
-            basket_empty = False    
+class BasketView(TemplateView):
+    template_name = "cart/basket.html"
 
-        context = {
-            "cart": cart,
-            "basket_empty": basket_empty,
-            "order_total": self.order_total(self.request)
-        }
-
-        return render(request, "holmescraftsuk/basket.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = get_cart(self.request)
+        context["cart"] = cart
+        context["items"] = cart.items.all()
+        return context
     
-    def post(self, request):
-        cart = request.session.get("cart", {})
-        product_code = request.POST["product_code"]
-        quantity = int(request.POST["quantity"])
-        product_img = request.POST["product_img"]
-        product_name = request.POST["product_name"]
-        product_price = request.POST["product_price"]
-
-        cart[product_code] = cart.get(product_code, {})
-        cart[product_code]["image"] = product_img
-        cart[product_code]["name"] = product_name
-        cart[product_code]["price"] = product_price
-        cart[product_code]["quantity"] = cart[product_code].get("quantity", 0) + quantity
-        total = Decimal(cart[product_code].get("price", 0)) * Decimal(cart[product_code].get("quantity", 0))
-        cart[product_code]["total"] = str(total)
-
-        request.session["cart"] = cart
-
-        return redirect("home_page")
-    
-class BasketRemoveView(View):
-    def post(self, request):
-            cart = request.session.get("cart", {})
-            product_code = request.POST["product_code"]
-
-            del cart[product_code]
-
-            request.session["cart_notebooks"] = cart
-
-            return redirect("basket")  
