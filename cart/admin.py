@@ -30,11 +30,11 @@ class CartAdmin(admin.ModelAdmin):
     search_fields = ('id', 'user__username', 'session_key')
 
     def display_total_items(self, obj):
-        return obj.total_items
+        return sum(item.quantity for item in obj.items.all())
     display_total_items.short_description = "Total Items"
 
     def display_total_price(self, obj):
-        return obj.total_price
+        return sum(item.subtotal for item in obj.items.all())
     display_total_price.short_description = "Total Price"
 
 
