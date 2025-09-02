@@ -1,5 +1,5 @@
 from .services import set_nav, set_nav_cards
-from cart.services import get_cart_count
+from cart.utils import get_cart
 
 def set_nav_bar(request):
 
@@ -11,6 +11,7 @@ def set_nav_bar(request):
 
 def cart_count(request):
 
+    cart = get_cart(request)
     return {
-        "in_cart": get_cart_count(request)
+        "in_cart": cart.total_quantity if cart else 0
     }
