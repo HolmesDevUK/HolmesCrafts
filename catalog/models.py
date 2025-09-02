@@ -57,6 +57,7 @@ class Product(OrderingMixin, models.Model):
     price_group = models.ForeignKey(PriceGroup, on_delete=models.PROTECT, related_name="products")
     slug = models.SlugField(default="", blank=True, null=False, db_index=True)
     code = models.CharField(max_length=20, null=True, unique=True)
+    cart_image = models.ImageField(upload_to=upload_to, null=True, blank=True)
     is_featured = models.BooleanField(default=False)
     in_store = models.BooleanField(default=True)
     has_variants = models.BooleanField(default=False)

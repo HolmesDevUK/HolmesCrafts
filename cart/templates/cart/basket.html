@@ -17,18 +17,18 @@
             <th>Total</th>
             <th>Remove</th>
         </tr>
-        {% for product_code, product in cart.items %}
+        {% for item in items %}
             <tr class="table_row">
-                <td class="basket_img"><img class="basket_image" src={{ product.image }}></td>
+                <td class="basket_img"><img class="basket_image" src="{{ item.image }}"></td>
                 <td class="basket_name">{{ product.name }}</td>
                 <td class="basket_price">£{{ product.price }}</td>
                 <td class="quantity">{{ product.quantity }}</td>
                 <td class="totals">£{{ product.total }}</td>
                 <td>
-                    <form action={% url "basket_remove" %} method="POST">
+                    <form action="{% url 'cart:remove_from_cart' %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" value="{{ product_code }}" name="product_code">
-                        <button type="submit" class="remove_button"><img class="remove_img" src="{% static "holmescraftsuk/images/remove-icon.png" %}"></button>
+                        <button type="submit" class="remove_button"><img class="remove_img" src="{% static 'core/images/remove-icon.png' %}"></button>
                     </form>
                 </td>
             </tr>
