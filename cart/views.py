@@ -5,6 +5,7 @@ from catalog.models import Product
 from .models import CartItem
 from .utils import get_cart
 
+
 def add_to_cart(request, product_id):
     cart = get_cart(request)
     product = get_object_or_404(Product, id=product_id)

@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 
 from .models import Card, Notebook
 from core.models import Navbar
+from cart.forms import CartAddForm
 
 class NotebooksView(ListView):
     template_name = "catalog/notebooks.html"
@@ -30,25 +31,18 @@ class NotebookShopPageView(DetailView):
     context_object_name = "notebook"
 
     
-    def post(self, request):
-        cart = request.session.get("cart", {})
-        product_id = request.POST["product_id"]
-        quantity = request.POST["quantity"]
-
-        cart[product_id] = quantity
-
-        request.session["cart"] = cart
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CartAddForm()
+        return context
     
 class CardShopPageView(DetailView):
     template_name = "catalog/card_shop_page.html" 
     model = Card
     context_object_name = "card"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CartAddForm()
+        return context
     
-    def post(self, request):
-        cart = request.session.get("cart", {})
-        product_id = request.POST["product_id"]
-        quantity = request.POST["quantity"]
-
-        cart[product_id] = quantity
-
-        request.session["cart"] = cart

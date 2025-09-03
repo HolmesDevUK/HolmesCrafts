@@ -34,13 +34,9 @@
         </ul>
         
         <p class="quantity_name">Quantity</p>
-        <form class="add_to_cart_form" action="{% url 'cart:basket' %}" method="POST">
+        <form class="add_to_cart_form" action="{% url 'cart:add_to_cart' notebook.id %}" method="POST">
             {% csrf_token %}
-            <input id="quantity" type="number" min="0" value="0" name="quantity">
-            <input type="hidden" value="{{ notebook.images.front_cover.url }}" name="product_img">
-            <input type="hidden" value="{{ notebook.name }}" name="product_name">
-            <input type="hidden" value="{{ notebook.price }}" name="product_price">
-            <input type="hidden" value="{{ notebook.code }}" name="product_code">
+            {{ form.quantity }}
             <button class="add_to_basket" type="submit">Add to cart</button>
         </form>
     </div>
