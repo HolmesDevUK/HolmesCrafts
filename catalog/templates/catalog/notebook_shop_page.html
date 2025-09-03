@@ -37,6 +37,7 @@
         <form class="add_to_cart_form" action="{% url 'cart:add_to_cart' notebook.id %}" method="POST">
             {% csrf_token %}
             {{ form.quantity }}
+            {{ form.chosen_image }}
             <button class="add_to_basket" type="submit">Add to cart</button>
         </form>
     </div>
