@@ -3,7 +3,7 @@
 
 {% block title %} Basket | {{ block.super }} {% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'holmescraftsuk/styles/basket.css' %}">
+<link rel="stylesheet" href="{% static 'cart/styles/basket.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -19,15 +19,14 @@
         </tr>
         {% for item in items %}
             <tr class="table_row">
-                <td class="basket_img"><img class="basket_image" src="{{ item.image }}"></td>
-                <td class="basket_name">{{ product.name }}</td>
-                <td class="basket_price">£{{ product.price }}</td>
-                <td class="quantity">{{ product.quantity }}</td>
-                <td class="totals">£{{ product.total }}</td>
+                <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}"></td>
+                <td class="basket_name">{{ item.name }}</td>
+                <td class="basket_price">£{{ item.price }}</td>
+                <td class="quantity">{{ item.quantity }}</td>
+                <td class="totals">£{{ item.total_price }}</td>
                 <td>
-                    <form action="{% url 'cart:remove_from_cart' %}" method="POST">
+                    <form action="{% url 'cart:remove_from_cart' item.id %}" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" value="{{ product_code }}" name="product_code">
                         <button type="submit" class="remove_button"><img class="remove_img" src="{% static 'core/images/remove-icon.png' %}"></button>
                     </form>
                 </td>
@@ -46,10 +45,10 @@
             </tr>
         </table>
     <br><br>
-        <form class="to_checkout_form" action={% url "checkout" %} method="POST">
+        {% comment %} <form class="to_checkout_form" action={% url "checkout" %} method="POST">
             {% csrf_token %}
             <button type="submit" class="to_checkout">Checkout</button>
-        </form>
+        </form> {% endcomment %}
     {% endif %}
     <br><br>
 </div>

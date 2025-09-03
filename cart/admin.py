@@ -8,7 +8,7 @@ class CartItemInline(admin.TabularInline):
     readonly_fields = ('product', 'quantity', 'display_subtotal', 'chosen_image_display')
 
     def display_subtotal(self, obj):
-        return obj.subtotal
+        return obj.total_price()
     display_subtotal.short_description = "Subtotal"
 
     def chosen_image_display(self, obj):
@@ -34,7 +34,7 @@ class CartAdmin(admin.ModelAdmin):
     display_total_items.short_description = "Total Items"
 
     def display_total_price(self, obj):
-        return sum(item.subtotal for item in obj.items.all())
+        return sum(item.total_price() for item in obj.items.all())
     display_total_price.short_description = "Total Price"
 
 
@@ -45,5 +45,5 @@ class CartItemAdmin(admin.ModelAdmin):
     search_fields = ('product__name',)
 
     def display_subtotal(self, obj):
-        return obj.subtotal
+        return obj.total_price()
     display_subtotal.short_description = "Subtotal"

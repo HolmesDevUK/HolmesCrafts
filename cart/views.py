@@ -9,21 +9,25 @@ from .utils import get_cart
 def add_to_cart(request, product_id):
     cart = get_cart(request)
     product = get_object_or_404(Product, id=product_id)
-    qty = int(request.Post.get("quantity", 1))
+    qty = int(request.POST.get("quantity", 1))
+    chosen_img_url = request.POST.get("chosen_image")
 
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
-        cart.item.quantity += qty
+        cart_item.quantity += qty
     else:
         cart_item.quantity = qty
+
+    if chosen_img_url:
+        cart_item.chosen_image = chosen_img_url    
     cart_item.save()
 
-    return redirect("basket")
+    return redirect("cart:basket")
 
-def remove_from_cart(request, item_id):
-    cart_item = get_object_or_404(CartItem, id=item_id)
+def remove_from_cart(request, product_id):
+    cart_item = get_object_or_404(CartItem, id=product_id)
     cart_item.delete()
-    return redirect("basket")      
+    return redirect("cart:basket")      
 
 class BasketView(TemplateView):
     template_name = "cart/basket.html"
