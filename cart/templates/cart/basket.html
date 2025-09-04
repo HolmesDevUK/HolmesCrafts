@@ -10,6 +10,14 @@
 <div class="basket_container" id="basket_container">
     <h1 id="basket">Basket</h1>
     <table class="basket_table" Id="basket_table">
+        <colgroup>
+            <col style="width: 15%;">
+            <col style="width: 30%;">
+            <col style="width: 15%;">
+            <col style="width: 15%;">
+            <col style="width: 15%;">
+            <col style="width: 10%;">
+        </colgroup>
         <tr>
             <th colspan="2">Product</th>
             <th>Price</th>
@@ -18,38 +26,39 @@
             <th>Remove</th>
         </tr>
         {% for item in items %}
-            <tr class="table_row">
+            <tr>
                 <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}"></td>
-                <td class="basket_name">{{ item.name }}</td>
-                <td class="basket_price">£{{ item.price }}</td>
-                <td class="quantity">{{ item.quantity }}</td>
+                <td class="basket_name">{{ item.product.name }}</td>
+                <td class="basket_price">£{{ item.product.price }}</td>
+                <td class="quantity">
+                    <input type="number" class="quantity_input" data-item-id="{{ item.id }}" value="{{ item.quantity }}" min="1">
+                </td>
                 <td class="totals">£{{ item.total_price }}</td>
                 <td>
-                    <form action="{% url 'cart:remove_from_cart' item.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="remove_button"><img class="remove_img" src="{% static 'core/images/remove-icon.png' %}"></button>
-                    </form>
+                    <button type="submit" class="remove_button" data-item-id="{{ item.id }}"><img class="remove_img" src="{% static 'cart/images/remove-icon.png' %}"></button>
                 </td>
             </tr>
+        {% empty %}
+        <tr>
+            <td id="empty_basket" colspan=6>The Basket is currently empty</td>
+        </tr>   
         {% endfor %}
     </table>
-    {% if basket_empty %}
-        <p id="empty_basket">The Basket is currently empty</p>
-    {% else %}
-        <table class="order_total_table">
-            <tr>
-                <th class="order_total">Order Total</th>
-            </tr>
-            <tr>
-                <td id="order_total">£{{ order_total }}</td>
-            </tr>
-        </table>
+    {% if items %}
+    <table class="order_total_table">
+        <tr>
+            <th class="order_total">Order Total</th>
+        </tr>
+        <tr>
+            <td id="order_total">£{{ cart.total_price }}</td>
+        </tr>
+    </table>
+    {% endif %}
     <br><br>
         {% comment %} <form class="to_checkout_form" action={% url "checkout" %} method="POST">
             {% csrf_token %}
             <button type="submit" class="to_checkout">Checkout</button>
         </form> {% endcomment %}
-    {% endif %}
     <br><br>
 </div>
 {% endblock %}
