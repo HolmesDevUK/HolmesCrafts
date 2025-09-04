@@ -27,15 +27,26 @@
         </tr>
         {% for item in items %}
             <tr>
-                <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}"></td>
+                <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}" alt="{{ item.product.name }}"></td>
                 <td class="basket_name">{{ item.product.name }}</td>
                 <td class="basket_price">£{{ item.product.price }}</td>
                 <td class="quantity">
-                    <input type="number" class="quantity_input" data-item-id="{{ item.id }}" value="{{ item.quantity }}" min="1">
+                    <form action="{% url 'cart:update_cart_item' item.id %}" method="POST" class="quantity-form">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" class="quantity_input"
+                               value="{{ item.quantity }}" min="1"
+                               data-item-id="{{ item.id }}">
+                        <button type="submit" class="hidden-submit" style="display:none;">Update</button>
+                    </form>
                 </td>
                 <td class="totals">£{{ item.total_price }}</td>
                 <td>
-                    <button type="submit" class="remove_button" data-item-id="{{ item.id }}"><img class="remove_img" src="{% static 'cart/images/remove-icon.png' %}"></button>
+                    <form action="{% url 'cart:remove_from_cart' item.id %}" method="POST" class="remove-form">
+                        {% csrf_token %}
+                        <button type="submit" class="removeButton" data-item-id="{{ item.id }}">
+                            <img class="remove_img" src="{% static 'cart/images/remove-icon.png' %}">
+                        </button>
+                    </form>
                 </td>
             </tr>
         {% empty %}
@@ -61,4 +72,8 @@
         </form> {% endcomment %}
     <br><br>
 </div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'cart/scripts/basket.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from catalog.models import Product
 from .models import CartItem
@@ -24,10 +27,38 @@ def add_to_cart(request, product_id):
 
     return redirect("cart:basket")
 
-def remove_from_cart(request, product_id):
-    cart_item = get_object_or_404(CartItem, id=product_id)
+@require_POST
+def update_cart_item(request, item_id=None):
+    is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
+    if is_ajax:
+        data = json.loads(request.body)
+        item_id = data.get('item_id')
+        quantity = int(data.get('quantity', 1))
+    else:
+        quantity = int(request.POST.get('quantity', 1))
+
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.quantity = quantity
+    cart_item.save()
+
+    if is_ajax:
+        subtotal = cart_item.total_price()
+        total = sum(item.total_price() for item in cart_item.cart.items.all())
+        return JsonResponse({'subtotal': subtotal, 'total': total})
+
+    return redirect('cart:basket')
+
+@require_POST
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart = cart_item.cart
     cart_item.delete()
-    return redirect("cart:basket")      
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        total = sum(item.total_price for item in cart.items.all())
+        return JsonResponse({'total': total})
+
+    return redirect('cart:basket') 
 
 class BasketView(TemplateView):
     template_name = "cart/basket.html"
