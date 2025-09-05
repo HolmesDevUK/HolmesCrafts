@@ -55,11 +55,7 @@ td, th {
     font-weight: bold;
 }
 
-.order_total_table {
-    margin: 1%;
-    width: 98%;
-    border-collapse: collapse;
-    table-layout: fixed;
-    text-align: center;
-    font-size: 20px;
+.order_total_label {
+    text-align:right; 
+    font-weight:bold;
 }

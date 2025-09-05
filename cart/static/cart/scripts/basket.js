@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.remove();
                 document.getElementById("order_total").innerText = `£${data.total}`;
 
-                if (data.total == 0) {
+                if (tbody.children.length === 0) {
                     const tbody = document.querySelector(".basket_table tbody");
                     tbody.innerHTML = '<tr><td colspan="6" id="empty_basket">The Basket is currently empty</td></tr>';
                 }

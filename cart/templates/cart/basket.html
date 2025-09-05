@@ -18,53 +18,55 @@
             <col style="width: 15%;">
             <col style="width: 10%;">
         </colgroup>
-        <tr>
-            <th colspan="2">Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Remove</th>
-        </tr>
-        {% for item in items %}
+        <thead>
             <tr>
-                <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}" alt="{{ item.product.name }}"></td>
-                <td class="basket_name">{{ item.product.name }}</td>
-                <td class="basket_price">£{{ item.product.price }}</td>
-                <td class="quantity">
-                    <form action="{% url 'cart:update_cart_item' item.id %}" method="POST" class="quantity-form">
-                        {% csrf_token %}
-                        <input type="number" name="quantity" class="quantity_input"
-                               value="{{ item.quantity }}" min="1"
-                               data-item-id="{{ item.id }}">
-                        <button type="submit" class="hidden-submit" style="display:none;">Update</button>
-                    </form>
-                </td>
-                <td class="totals">£{{ item.total_price }}</td>
-                <td>
-                    <form action="{% url 'cart:remove_from_cart' item.id %}" method="POST" class="remove-form">
-                        {% csrf_token %}
-                        <button type="submit" class="removeButton" data-item-id="{{ item.id }}">
-                            <img class="remove_img" src="{% static 'cart/images/remove-icon.png' %}">
-                        </button>
-                    </form>
-                </td>
+                <th colspan="2">Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Remove</th>
             </tr>
-        {% empty %}
-        <tr>
-            <td id="empty_basket" colspan=6>The Basket is currently empty</td>
-        </tr>   
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td class="basket_img"><img class="basket_image" src="{{ item.display_image }}" alt="{{ item.product.name }}"></td>
+                    <td class="basket_name">{{ item.product.name }}</td>
+                    <td class="basket_price">£{{ item.product.price }}</td>
+                    <td class="quantity">
+                        <form action="{% url 'cart:update_cart_item' item.id %}" method="POST" class="quantity-form">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" class="quantity_input"
+                                value="{{ item.quantity }}" min="1"
+                                data-item-id="{{ item.id }}">
+                            <button type="submit" class="hidden-submit" style="display:none;">Update</button>
+                        </form>
+                    </td>
+                    <td class="totals">£{{ item.total_price }}</td>
+                    <td>
+                        <form action="{% url 'cart:remove_from_cart' item.id %}" method="POST" class="remove-form">
+                            {% csrf_token %}
+                            <button type="submit" class="removeButton" data-item-id="{{ item.id }}">
+                                <img class="remove_img" src="{% static 'cart/images/remove-icon.png' %}">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+            <tr>
+                <td id="empty_basket" colspan=6>The Basket is currently empty</td>
+            </tr>   
+            {% endfor %}
+        </tbody>
+        {% if items %}
+        <tfoot>
+            <tr>
+                <td class="order_total_label" colspan="4">Order Total:</td>
+                <td colspan="2" id="order_total">£{{ cart.total_price }}</td>
+            </tr>
+        </tfoot>
+        {% endif %}
     </table>
-    {% if items %}
-    <table class="order_total_table">
-        <tr>
-            <th class="order_total">Order Total</th>
-        </tr>
-        <tr>
-            <td id="order_total">£{{ cart.total_price }}</td>
-        </tr>
-    </table>
-    {% endif %}
     <br><br>
         {% comment %} <form class="to_checkout_form" action={% url "checkout" %} method="POST">
             {% csrf_token %}
