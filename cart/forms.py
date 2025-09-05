@@ -8,6 +8,6 @@ class CartAddForm(forms.Form):
     )
     chosen_image = forms.CharField(
         required=False,
-        widget=forms.HiddenInput()
+        widget=forms.HiddenInput(attrs={"id": "chosen_image"})
     )
 
