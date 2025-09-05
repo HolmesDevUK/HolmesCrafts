@@ -28,12 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = this.closest('tr');
 
             sendAjax(`/basket/remove-ajax/${itemId}/`, null, function(data) {
-                row.remove();
-                document.getElementById("order_total").innerText = `£${data.total}`;
+                const tbody = document.querySelector(".basket_table tbody");
+                const tfoot = document.querySelector(".basket_table tfoot");
 
-                if (tbody.children.length === 0) {
-                    const tbody = document.querySelector(".basket_table tbody");
+                row.remove();
+
+                if (data.total > 0) {
+                document.getElementById("order_total").innerText = `£${data.total}`;
+                } else {
                     tbody.innerHTML = '<tr><td colspan="6" id="empty_basket">The Basket is currently empty</td></tr>';
+                    if (tfoot) tfoot.remove();
                 }
             });
 
