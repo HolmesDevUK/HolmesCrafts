@@ -28,12 +28,12 @@
             <button class="color_var_btn" id="color_var_btn">Pick a Color Variant</button>
             <div class="color_var_dropdown">
                 {% for variant in card.variants.all %}
-                    <a onClick ='colorVar("{{ variant.variant_img.url }}", "{{variant.variant_name}}", "{{ card.name }}", "{{ card.code }}")'>{{ variant.variant_name }}</a>
+                    <a onClick ='colorVar("{{ variant.variant_img.url }}", "{{variant.variant_name}}")'>{{ variant.variant_name }}</a>
                 {% endfor %}
             </div>
         </div>
        {% endif %}
-        <form class="add_to_cart_form" action="{% url 'cart:add_to_cart' card.id %}" method="POST">
+        <form class="add_to_cart_form {% if card.has_variants %}hidden{% endif %}" action="{% url 'cart:add_to_cart' card.id %}" method="POST">
             {% csrf_token %}
             {{ form.quantity }}
             {{ form.chosen_image }}

@@ -133,7 +133,7 @@
     display: block;
 }
 
-.add_to_cart_form {
+.add_to_cart_form:not(.hidden) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
