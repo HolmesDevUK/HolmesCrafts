@@ -1,9 +1,23 @@
+:root {
+	--primary: #954ECA;
+	--secondary: #B98EFF;
+	--background: #EFE5F7;
+	--text: #000000;
+	--accent: #FF4C4C;
+	--highlight: #FBE4FF;
+	--link: #954ECA;
+	--hover: #6B2E99;
+	--error: #FF4C4C;
+	--success: #4CAF50;
+}
+
 body {
 	margin: 0;
 	padding: 0;
-	background-color: #EFE5F7;
+	background-color: var(--background);
 	min-height: 100vh;
 	font-family: 'Trebuchet MS', sans-serif;
+	color: var(--text);
 }
 
 .MainContent {
@@ -11,8 +25,8 @@ body {
     padding: 1%;
 }
 
-h2 {
-	color: black;
+h1, h2, h3 {
+	color: var(--primary);
 }
 
 .hidden {

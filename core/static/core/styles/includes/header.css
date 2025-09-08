@@ -17,12 +17,12 @@
     float: right;
     margin: 100px 10px 10px 0;
     text-align: center;
-    color: red;
+    color: var(--accent);
     font-size: 30px;
 }
 
 .madehow {
-	color: red;
+	color: var(--accent);
 	float: left;
 	margin: 65px 0 0 0;
 	text-align: center;
@@ -30,7 +30,7 @@
 
 nav {
 	clear: both;
-	background-color: #954ECA;
+	background-color: var(--primary);
 	padding: 10px 10px;
 	width: 100%;
 	text-align: center;
@@ -44,7 +44,6 @@ nav ul {
 
 nav ul li {
 	font-size: 20px;
-	color: black;
 	display: inline-block;
 	list-style-type: none;
 	padding: 0 10px;
@@ -52,33 +51,28 @@ nav ul li {
 }
 
 nav ul li a:link {
-	color: black;
 	text-decoration: none;
 }
 
 nav ul li a:visited {
-	color: black;
 	text-decoration: none;
 }
 
 nav ul li a:hover {
-    color: black;
     text-decoration: none;
-    background: #EFE5F7;
+    background-color: var(--secondary);
 }
 
 nav ul li a:active {
-	color: black;
 	text-decoration: none;
 }
 
 nav ul .CurrentPage {
-    background-color: #EFE5F7;
+    background-color: var(--secondary);
 }
 
 .dropdown {
 	font-size: 20px;
-	color: black;
 	display: inline-block;
 	list-style-type: none;
 	margin: 5px;
@@ -94,15 +88,14 @@ nav ul .CurrentPage {
 }
 
 .dropdown:hover .Cardsdropdown {
-    color: black;
     text-decoration: none;
-    background: #EFE5F7;
+    background: var(--secondary);
 }
 
 .DropdownContent {
 	display: none;
 	position: absolute;
-	background-color: #EFE5F7;
+	background-color: var(--secondary);
 	min-width: 60px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	z-index: 1;
@@ -112,33 +105,29 @@ nav ul .CurrentPage {
     float: none;
     display: block;
     text-align: left;
-    background-color: #EFE5F7;
+    background-color: var(--secondary);
     margin: 3% 0;
 }
 
 .DropdownContent a:link {
-    color: black;
     text-decoration: none;
 }
 
 .DropdownContent a:visited {
-    color: black;
     text-decoration: none;
 }
 
 .DropdownContent a:hover {
-    color: black;
     text-decoration: none;
-    background: #9A57CD;
+    background: var(--primary);
 }
 
 .DropdownContent a:active {
-    color: black;
     text-decoration: none;
 }
 
 .DropdownContent .CurrentPage {
-	background: #9A57CD;
+	background: var(--primary)
 }
 
 .dropdown:hover .DropdownContent { 

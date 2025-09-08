@@ -4,7 +4,7 @@
     height: 700px;
     margin: 1%;
     border-style: solid;
-    border-color: #954ECA;
+    border-color: var(--primary);
     border-radius: 100px;
 }
     
@@ -27,7 +27,7 @@
     top: 30%;
     left: 15%;
     transform: rotate(-20deg);
-    box-shadow: 0 0  50px 5px #EFE5F7;
+    box-shadow: 0 0  50px 5px var(--highlight);
 }
     
 .midfeatured {
@@ -37,7 +37,7 @@
     top: 0;
     left: 30%;
     z-index: 1;
-    box-shadow: 0 0  50px 5px #EFE5F7;
+    box-shadow: 0 0  50px 5px var(--highlight);
 }
     
 .rightfeatured {
@@ -47,15 +47,14 @@
     top: 30%;
     right: 20%;
     transform: rotate(20deg);
-    box-shadow: 0 0  50px 5px #EFE5F7;
+    box-shadow: 0 0  50px 5px var(--highlight);
 }
 
 .pageLink {
     text-decoration: none;
     display:block;
-    color: black;
 }
 
 .pageLink:hover {
-    color: #954ECA;
+    background-color: var(--hover);
 }
