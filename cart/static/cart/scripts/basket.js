@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sendAjax("/basket/update-ajax/", { item_id: itemId, quantity: newQty }, function(data) {
                 subtotalCell.innerText = `£${data.subtotal}`;
                 document.getElementById("order_total").innerText = `£${data.total}`;
+                document.getElementById("cartNumber").innerText = data.total_quantity;
             });
         });
     });
@@ -32,7 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tfoot = document.querySelector(".basket_table tfoot");
 
                 row.remove();
-                print("row removed");
+                document.getElementById("cartNumber").innerText = data.total_quantity;
+                console.log("AJAX response:", data);
 
                 if (data.total > 0) {
                 document.getElementById("order_total").innerText = `£${data.total}`;

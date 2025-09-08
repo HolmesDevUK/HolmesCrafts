@@ -44,7 +44,8 @@ def update_cart_item(request, item_id=None):
     if is_ajax:
         subtotal = cart_item.total_price()
         total = sum(item.total_price() for item in cart_item.cart.items.all())
-        return JsonResponse({'subtotal': subtotal, 'total': total})
+        total_quantity = sum(item.quantity for item in cart_item.cart.items.all())
+        return JsonResponse({'subtotal': subtotal, 'total': total, 'total_quantity': total_quantity})
 
     return redirect('cart:basket')
 
@@ -56,7 +57,8 @@ def remove_from_cart(request, item_id):
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         total = sum(item.total_price() for item in cart.items.all())
-        return JsonResponse({'total': total})
+        total_quantity = sum(item.quantity for item in cart.items.all())
+        return JsonResponse({'total': total, 'total_quantity': total_quantity})
 
     return redirect('cart:basket') 
 

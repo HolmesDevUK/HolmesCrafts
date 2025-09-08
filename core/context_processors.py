@@ -13,5 +13,5 @@ def cart_count(request):
 
     cart = get_cart(request)
     return {
-        "in_cart": cart.total_quantity if cart else 0
+        "in_cart": cart.total_quantity() if cart else 0
     }
