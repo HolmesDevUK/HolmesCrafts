@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tfoot = document.querySelector(".basket_table tfoot");
 
                 row.remove();
+                print("row removed");
 
                 if (data.total > 0) {
                 document.getElementById("order_total").innerText = `£${data.total}`;

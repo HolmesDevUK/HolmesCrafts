@@ -55,7 +55,7 @@ def remove_from_cart(request, item_id):
     cart_item.delete()
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        total = sum(item.total_price for item in cart.items.all())
+        total = sum(item.total_price() for item in cart.items.all())
         return JsonResponse({'total': total})
 
     return redirect('cart:basket') 

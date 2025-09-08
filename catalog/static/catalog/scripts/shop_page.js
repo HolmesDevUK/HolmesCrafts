@@ -25,7 +25,7 @@ function colorVar(Img, color)
 	colorVarBtn.innerHTML = color;
 
 	addToCartForm.classList.remove('hidden');
-	chosen_image_field.value = Img
+	chosen_image_field.value = Img.replace("/media/", "");
 
 	console.log("works")
 
