@@ -29,6 +29,21 @@ h1, h2, h3 {
 	color: var(--primary);
 }
 
+a:link, a:visited {
+	color: var(--link);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--hover);
+	text-decoration: none;
+}
+
+a:active {
+	color: var(--accent);
+	text-decoration: none;
+}
+
 .hidden {
 	display: none !important;
 }

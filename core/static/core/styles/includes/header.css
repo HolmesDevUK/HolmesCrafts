@@ -51,20 +51,16 @@ nav ul li {
 }
 
 nav ul li a:link {
-	text-decoration: none;
+	color: var(--text);
 }
 
 nav ul li a:visited {
-	text-decoration: none;
+	color: var(--text);
 }
 
 nav ul li a:hover {
-    text-decoration: none;
+    color: var(--text);
     background-color: var(--secondary);
-}
-
-nav ul li a:active {
-	text-decoration: none;
 }
 
 nav ul .CurrentPage {
@@ -88,7 +84,6 @@ nav ul .CurrentPage {
 }
 
 .dropdown:hover .Cardsdropdown {
-    text-decoration: none;
     background: var(--secondary);
 }
 
@@ -110,20 +105,16 @@ nav ul .CurrentPage {
 }
 
 .DropdownContent a:link {
-    text-decoration: none;
+    color: var(--text);
 }
 
 .DropdownContent a:visited {
-    text-decoration: none;
+    color: var(--text);
 }
 
 .DropdownContent a:hover {
-    text-decoration: none;
+    color: var(--text);
     background: var(--primary);
-}
-
-.DropdownContent a:active {
-    text-decoration: none;
 }
 
 .DropdownContent .CurrentPage {
