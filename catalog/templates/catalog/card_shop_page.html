@@ -13,7 +13,7 @@
         <button class="shop_img_button" onClick ="changeImg()"><img class="small_shop_img" id="tall_img" src="{{ card.images.tall_img.url }}"></button>
         <button class="shop_img_button" onClick ="changeImg()"><img class="small_shop_img" id="small_img" src="{{ card.images.small_img.url }}"></button>
         {% if card.images.inside_img %}
-        <button class="shop_img_button" id="small_img4" onClick ="changeImg()"><img class="small_shop_img" src="{{ card.images.inside_img.url }}"></button>
+        <button class="shop_img_button" id="small_img4" onClick ="changeImg()"><img class="small_shop_img" src="{{ card.images.inside_img.img.url }}"></button>
         {% endif %}
     </div>
     <div class = "shop_img_container">

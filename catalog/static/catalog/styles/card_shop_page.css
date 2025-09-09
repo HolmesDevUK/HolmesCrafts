@@ -2,7 +2,7 @@
     width: 90%;
     height: 1000px;
     margin: 1% 5%;
-    border: 5px solid #954ECA;
+    border: 5px solid var(--primary);
     display: flex;
     justify-content: space-around;
 }
@@ -29,13 +29,13 @@
 
 .shop_img {
     width: 98%;
-    border: 5px solid #954ECA;
+    border: 5px solid var(--primary);
 }
 
 .shop_img_button {
     width: 100%;
-    border: 5px solid #954ECA;
-    background-color: #EFE5F7;
+    border: 5px solid var(--primary);
+    background-color: var(--secondary);
     cursor: pointer;
     padding: 0;
     margin: 0;
@@ -93,8 +93,7 @@
 }
 
 .color_var_btn {
-    background-color: #EFE5F7;
-    color: black;
+    background-color: var(--secondary);
     padding: 16px;
     font-size: 20px;
     border:solid;

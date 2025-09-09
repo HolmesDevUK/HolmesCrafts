@@ -1,18 +1,20 @@
 .pageTitle {
-    color: #954ECA;
     text-align: center;
     font-size: 60px;
     text-decoration: underline;
 }
 
-.pageLink {
-    text-decoration: none;
+.pageLink:link {
     display:block;
-    color: black; 
+    color: var(--text);
+}
+
+.pageLink:visited {
+	color: var(--text);
 }
     
 .pageLink:hover {
-    color: #954ECA;
+    color: var(--primary);
 }
 
 .cardInfo {
@@ -20,7 +22,7 @@
     margin: 0.5%;
     width: 13%;
     height: 500px;
-    border: #954ECA solid 1px;
+    border: var(--primary) solid 1px;
 }
 
 .card {

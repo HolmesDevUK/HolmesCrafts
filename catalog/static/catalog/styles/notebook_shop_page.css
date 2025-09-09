@@ -28,13 +28,13 @@
 
 .shop_img {
     width: 98%;
-    border: 5px solid #954ECA;
+    border: 5px solid var(--primary);
 }
 
 .shop_img_button {
     width: 100%;
-    border: 5px solid #954ECA;
-    background-color: #EFE5F7;
+    border: 5px solid var(--primary);
+    background-color: var(--secondary);
     cursor: pointer;
     padding: 0;
     margin: 0;
