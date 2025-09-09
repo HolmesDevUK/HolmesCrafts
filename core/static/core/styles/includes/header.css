@@ -1,3 +1,7 @@
+header {
+	background-color: var(--background)
+}
+
 .logo {
 	height: 150px;
 	float: left;
@@ -21,6 +25,10 @@
     font-size: 30px;
 }
 
+.user_login {
+	float: right;
+}
+
 .madehow {
 	color: var(--accent);
 	float: left;
@@ -30,11 +38,11 @@
 
 nav {
 	clear: both;
-	background-color: var(--primary);
 	padding: 10px 10px;
 	width: 100%;
 	text-align: center;
 	box-sizing: border-box;
+	background-color: var(--primary);
 }
 
 nav ul {

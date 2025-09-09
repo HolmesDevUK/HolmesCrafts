@@ -3,28 +3,34 @@
 <header>
     <img class="logo" src="{% static 'core/images/logo.png' %}" alt="Holmes Crafts Logo">
     <p class="madehow">All our cards are beautifully and <br> carefully handmade.</p>
+    <div class="user_login">
+        <p>Hello,
+        {% if user.is_authenticated %} 
+            {{ user.name }}</p>
+        {% endif %}    
+    </div>
     <a class="basket" href="{% url 'cart:basket' %}"><img src="{% static 'cart/images/basket-icon.png' %}" alt="Basket"></a>
     <p id="cartNumber">{{ in_cart }}</p>
     <nav>
-        <hr>
+    <hr>
         <ul>
             {% for nav in nav_bar %}
-            {% if nav.page_name == current_page %}
-            <li class = "CurrentPage">{{ nav.page_name }}</li>
-            {% else %}
-            <li><a href="{% url nav.url %}">{{ nav.page_name }}</a></li>
-            {% endif %}
+                {% if nav.page_name == current_page %}
+                    <li class = "CurrentPage">{{ nav.page_name }}</li>
+                {% else %}
+                    <li><a href="{% url nav.url %}">{{ nav.page_name }}</a></li>
+                {% endif %}
             {% endfor %}
 
             <div class = "dropdown">
                 <li> <a class = "Cardsdropdown">GREETING CARDS</a></li>
                 <div class= "DropdownContent">
                     {% for nav in nav_bar_cards %}
-                    {% if nav.page_name == current_page.page_name %}
-                    <a class = "CurrentPage">{{ nav.page_name }}</a>
-                    {% else %}
-                    <a href="{% url 'catalog:cards' nav.slug %}">{{ nav.page_name }}</a>
-                    {% endif %}
+                        {% if nav.page_name == current_page.page_name %}
+                            <a class = "CurrentPage">{{ nav.page_name }}</a>
+                        {% else %}
+                            <a href="{% url 'catalog:cards' nav.slug %}">{{ nav.page_name }}</a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
