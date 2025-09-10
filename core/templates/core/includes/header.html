@@ -7,6 +7,8 @@
         <p>Hello,
         {% if user.is_authenticated %} 
             {{ user.name }}</p>
+        {% else %}
+            <a href="{% url 'accounts:register' %}">Register</a>
         {% endif %}    
     </div>
     <a class="basket" href="{% url 'cart:basket' %}"><img src="{% static 'cart/images/basket-icon.png' %}" alt="Basket"></a>
