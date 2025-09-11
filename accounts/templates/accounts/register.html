@@ -1,10 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/styles/register.css' %}">
+{% endblock %}
 
 {% block content %}
-<h2>Create an Account</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }} 
-    <button type="submit">Register</button>
-</form>
+<div class="register-container">
+    <h1>Create an Account</h1>
+
+    <form method="post" class="register-form" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">Name</label>
+            {{ form.name }}
+            <div class="error">{{ form.name.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            <div class="error">{{ form.email.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Password</label>
+            {{ form.password1 }}
+            <div class="error">{{ form.password1.errors }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+            {{ form.password2 }}
+            <div class="error">{{ form.password2.errors }}</div>
+        </div>
+
+        <button type="submit" class="submit-btn">Register</button>
+    </form>
+
+    {% comment %} <p>Already have an account? 
+        <a href="{% url 'accounts:login' %}">Log in here</a>
+    </p> {% endcomment %}
+</div>
 {% endblock %}
