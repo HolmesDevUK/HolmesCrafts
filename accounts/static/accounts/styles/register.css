@@ -28,7 +28,7 @@
     border-radius: 4px;
 }
 
-.form-errors, .form-group span.errorlist, .error {
+.form-errors, .form-group span.errorlist {
     color: var(--error);
     font-size: 0.9rem;
 }
