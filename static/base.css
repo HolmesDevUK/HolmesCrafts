@@ -16,6 +16,11 @@
 
 	/*fonts*/
 	--font: 'Trebuchet MS', sans-serif;
+
+	/*spacing*/
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 2rem;
 }
 
 body {

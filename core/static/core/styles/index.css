@@ -4,6 +4,7 @@
     height: 700px;
     margin: 1%;
     border: var(--border);
+    border-radius: 100px;
 }
     
 .PageName{
