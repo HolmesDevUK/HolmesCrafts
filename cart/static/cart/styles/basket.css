@@ -7,7 +7,7 @@
 .basketContainer {
     width: 80%;
     margin: 1% 10%;
-    border: 5px solid #954ECA;
+    border: var(--border);
 }
 
 .basket_table {
@@ -20,11 +20,11 @@
 }
 
 th {
-    background-color: #954ECA;
+    background-color: var(--primary);
 }
 
 td, th {
-    border: 5px solid #954ECA;
+    border: var(--border);
 }
 
 .basket_image {

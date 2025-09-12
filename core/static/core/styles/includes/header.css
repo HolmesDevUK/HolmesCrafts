@@ -132,3 +132,7 @@ nav ul .CurrentPage {
 .dropdown:hover .DropdownContent { 
 	display: block;
 }
+
+.login-link, .signup-link, .logout-btn {
+	border: var(--border);
+}

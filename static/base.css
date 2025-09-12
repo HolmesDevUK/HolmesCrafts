@@ -1,4 +1,5 @@
 :root {
+	/*colours*/
 	--primary: #954ECA;
 	--secondary: #B98EFF;
 	--background: #EFE5F7;
@@ -9,6 +10,12 @@
 	--hover: #6B2E99;
 	--error: #FF4C4C;
 	--success: #4CAF50;
+
+	--border: 2px solid var(--primary);
+	--border-input: 1px solid var(--highlight);
+
+	/*fonts*/
+	--font: 'Trebuchet MS', sans-serif;
 }
 
 body {
@@ -16,7 +23,7 @@ body {
 	padding: 0;
 	background-color: var(--background);
 	min-height: 100vh;
-	font-family: 'Trebuchet MS', sans-serif;
+	font-family: var(--font);
 	color: var(--text);
 }
 

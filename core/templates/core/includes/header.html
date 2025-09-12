@@ -8,12 +8,12 @@
             <p>Hello, {{ user.name }}!</p>
             <form action="{% url 'accounts:logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Logout</button>
+                <button class="logout-btn" type="submit">Logout</button>
             </form>
         {% else %}
             <p>Welcome!
-            <a href="{% url 'accounts:login' %}">Log In</a>
-            <a href="{% url 'accounts:register' %}">Sign Up</a>
+            <a class="login-link" href="{% url 'accounts:login' %}">Log In</a>
+            <a class="signup-link" href="{% url 'accounts:register' %}">Sign Up</a>
         {% endif %}    
     </div>
     <a class="basket" href="{% url 'cart:basket' %}"><img src="{% static 'cart/images/basket-icon.png' %}" alt="Basket"></a>

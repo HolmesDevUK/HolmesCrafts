@@ -3,7 +3,7 @@
     margin: 2rem auto;
     padding: 2rem;
     background: var(--background);
-    border: 2px solid var(--primary);
+    border: var(--border);
     border-radius: 8px;
 }
 
@@ -24,7 +24,7 @@
 
 .form-group input {
     padding: 0.5rem;
-    border: 1px solid var(--highlight);
+    border: var(--border-input);
     border-radius: 4px;
 }
 

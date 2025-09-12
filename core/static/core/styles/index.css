@@ -3,9 +3,7 @@
     width: 47%;
     height: 700px;
     margin: 1%;
-    border-style: solid;
-    border-color: var(--primary);
-    border-radius: 100px;
+    border: var(--border);
 }
     
 .PageName{

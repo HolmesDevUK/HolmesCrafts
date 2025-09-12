@@ -28,12 +28,12 @@
 
 .shop_img {
     width: 98%;
-    border: 5px solid var(--primary);
+    border: var(--border);
 }
 
 .shop_img_button {
     width: 100%;
-    border: 5px solid var(--primary);
+    border: var(--border);
     background-color: var(--secondary);
     cursor: pointer;
     padding: 0;

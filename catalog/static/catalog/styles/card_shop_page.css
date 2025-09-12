@@ -2,7 +2,7 @@
     width: 90%;
     height: 1000px;
     margin: 1% 5%;
-    border: 5px solid var(--primary);
+    border: var(--border);
     display: flex;
     justify-content: space-around;
 }
@@ -29,12 +29,12 @@
 
 .shop_img {
     width: 98%;
-    border: 5px solid var(--primary);
+    border: var(--border);
 }
 
 .shop_img_button {
     width: 100%;
-    border: 5px solid var(--primary);
+    border: var(--border);
     background-color: var(--secondary);
     cursor: pointer;
     padding: 0;
@@ -108,7 +108,7 @@
 .color_var_dropdown {
     display: none;
     position: absolute;
-    background-color:#954ECA;
+    background-color:var(--primary);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0 px rgba(0,0,0,0.2);
     z-index: 1;
