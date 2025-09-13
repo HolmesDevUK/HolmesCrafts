@@ -55,6 +55,18 @@ header {
 
 .login-link, .signup-link, .logout-btn {
 	border: var(--border);
+	padding: 0.25rem;
+}
+
+.logout-btn {
+	background: none;
+	cursor: pointer;
+	color: var(--link);
+	font: inherit;
+}
+
+.logout-btn:hover {
+	color: var(--hover);
 }
 
 nav {
