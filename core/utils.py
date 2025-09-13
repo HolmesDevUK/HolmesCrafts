@@ -26,9 +26,18 @@ def upload_to(instance, filename):
 
 def send_email(subject: str, to_email: str, template_name: str, context: dict = None):
 
-    context = context or {}
+    logo_url = f"{settings.SITE_URL}{settings.STATIC_URL}core/images/logo.png"
 
-    html_content = render_to_string(template_name, context)
+    default_context = {
+        "logo_url": logo_url,
+        "website_url": settings.SITE_URL,
+        "year": datetime.now().year,
+    }
+
+    if context:
+        default_context.update(context)
+
+    html_content = render_to_string(template_name, default_context)
 
     email = EmailMultiAlternatives(
             subject = subject,

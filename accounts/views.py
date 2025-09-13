@@ -19,11 +19,6 @@ class RegisterView(CreateView):
         form_email = form.cleaned_data["email"]
         form_name = form.cleaned_data["name"]
 
-        send_email(
-            subject = "Account Confirmation",
-            message = ""
-        )
-
         login(self.request, self.object) 
         return response
     

@@ -167,3 +167,5 @@ EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
 
 EMAIL_DISPLAY = f"Holmes Crafts <{EMAIL_HOST_USER}>"
 
+Site_URL = "http://127.0.0.1:8000/"
+
