@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView
 
 from .forms import RegisterUserForm, LoginForm
 from .models import CustomUser
+from core.utils import send_email, send_me_email
 
 class RegisterView(CreateView):
     model = CustomUser
@@ -14,6 +15,15 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+
+        form_email = form.cleaned_data["email"]
+        form_name = form.cleaned_data["name"]
+
+        send_email(
+            subject = "Account Confirmation",
+            message = ""
+        )
+
         login(self.request, self.object) 
         return response
     

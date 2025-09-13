@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block subject %}{% endblock %}</title>
+    <style>
+        /* Basic email styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #EFE5F7;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #FBE4FF;
+            border: 2px solid #954ECA;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .footer {
+            font-size: 12px;
+            color: #000000;
+            text-align: center;
+            border-top: 1px solid #cccccc;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+        a {
+            color: #954ECA;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="{{ logo_url }}" alt="Holmes Crafts Logo">
+        </div>
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="footer">
+          <p>Thank you for supporting Holmes Crafts</p>
+          &copy; {{ year }} Holmes Crafts. All rights reserved.<br>
+          <a href="{{ website_url }}">Visit our website</a>
+        </div>
+    </div>
+</body>
+</html>
+
