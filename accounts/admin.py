@@ -6,11 +6,11 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ("email", "name", "role", "is_active", "is_staff")
-    list_filter = ("role", "is_staff", "is_active")
+    list_display = ("email", "name", "is_active", "is_staff")
+    list_filter = ("is_staff", "is_active")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal Info", {"fields":("name", "role")}),
+        ("Personal Info", {"fields":("name",)}),
         ("Permissions", {"fields":("is_staff", "is_active", "is_superuser", "groups", "user_permissions")}),
         ("Important Dates", {"fields":("last_login", )}),
     )
@@ -18,7 +18,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             "classes": ("wide",),
-            "fields": ("email", "name", "role", "password1", "password2", "is_staff", "is_active"),
+            "fields": ("email", "name", "password1", "password2", "is_staff", "is_active"),
         }),
     )
 
