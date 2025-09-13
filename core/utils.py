@@ -49,6 +49,3 @@ def send_email(subject: str, to_email: str, template_name: str, context: dict = 
     
     email.attach_alternative(html_content, "text/html")
     email.send()
-
-def send_me_email(subject, message):
-    send_email(subject, message, MY_EMAIL)
