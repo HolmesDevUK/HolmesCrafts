@@ -44,7 +44,7 @@ def send_email(subject: str, to_email: str, template_name: str, context: dict = 
             body = html_content,
             from_email = settings.EMAIL_DISPLAY,
             to = [to_email],
-            reply_to = MY_EMAIL
+            reply_to = [MY_EMAIL],
         )
     
     email.attach_alternative(html_content, "text/html")
