@@ -1,0 +1,8 @@
+{% extends "core/emails/base_email.html" %}
+
+{% block subject %}{{ subject }} | Holmes Crafts{% endblock %}
+
+{% block content %}
+    <h2>{{ subject }}</h2>
+    <p>{{ message }}</p>
+{% endblock %}

@@ -49,3 +49,15 @@ def send_email(subject: str, to_email: str, template_name: str, context: dict = 
     
     email.attach_alternative(html_content, "text/html")
     email.send()
+
+def new_user_email_admin(user):
+
+    send_email(
+        subject = "New User",
+        to_email = MY_EMAIL,
+        template_name = "core/emails/simple_admin_notification.html",
+        context = {
+            "subject": "A New User has Registered",
+            "message": f"{user.name} ({user.email}) has created an account."
+        }
+    )
