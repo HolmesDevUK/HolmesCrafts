@@ -5,6 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import environ
 from django.template.loader import render_to_string
+from django.contrib import messages
 
 env = environ.Env()
 
@@ -49,6 +50,21 @@ def send_email(subject: str, to_email: str, template_name: str, context: dict = 
     
     email.attach_alternative(html_content, "text/html")
     email.send()
+
+def alert_success(request, message):
+    messages.success(request, message)
+
+def alert_error(request, message):
+    messages.error(request, message)
+
+def alert_info(request, message):
+    messages.info(request, message)
+
+def alert_warning(request, message):
+    messages.warning(request, message)
+
+def alert_debug(request, message):
+    messages.debug(request, message)
 
 def new_user_email_admin(user):
 

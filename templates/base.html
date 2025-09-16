@@ -12,12 +12,25 @@
 </head>
 <body>
     {% include "core/includes/header.html" %}
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+                <button type="button" class="close-btn">×</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <main class="MainContent">
         {% block content %}
 
         {% endblock %}
     </main>
     <script src="{% static 'core/scripts/ajax.js' %}"></script>
+    <script src="{% static 'core/scripts/messages.js' %}"></script>
     {% block script %}{% endblock %}
 </body>
 </html>
