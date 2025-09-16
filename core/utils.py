@@ -61,3 +61,13 @@ def new_user_email_admin(user):
             "message": f"{user.name} ({user.email}) has created an account."
         }
     )
+
+def new_user_confirmation(user):
+    send_email(
+        subject = "Signup Confirmation",
+        to_email = user.email,
+        template_name = "core/emails/register_confirmation.html",
+        context = {
+            "user": user,
+        }
+    )    

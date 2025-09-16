@@ -1,7 +1,19 @@
 {% extends "core/emails/base_email.html" %}
 
-{% block subject %}Signup Confirmastion | Holmes Crafts{% endblock %}
+{% block subject %}Signup Confirmation | Holmes Crafts{% endblock %}
 
 {% block content %}
 
+<h1 style="margin:0 0 20px; font-size:24px; color:#333333;">
+    Welcome to HolmesCrafts, {{ user.name }}!
+</h1>
+
+<p style="margin:0 0 15px; font-size:16px; line-height:1.5; color:#555555;">
+    Thank you for creating an account with us. We hope that you find the perfect products for you.
+</p>
+
+
+<p style="margin:30px 0 0; font-size:14px; line-height:1.5; color:#888888;">
+    If you didn’t sign up for a HolmesCrafts account, you can safely ignore this email.
+</p>
 {% endblock %}

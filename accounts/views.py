@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView
 
 from .forms import RegisterUserForm, LoginForm
 from .models import CustomUser
-from core.utils import send_email, new_user_email_admin
+from core.utils import new_user_email_admin, new_user_confirmation
 
 class RegisterView(CreateView):
     model = CustomUser
@@ -16,6 +16,7 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
 
+        new_user_confirmation(user = self.object)
         new_user_email_admin(user = self.object)
 
         login(self.request, self.object) 
