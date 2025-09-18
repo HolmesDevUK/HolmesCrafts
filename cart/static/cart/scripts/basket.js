@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sendAjax(`/basket/remove-ajax/${itemId}/`, null, function(data) {
                 const tbody = document.querySelector(".basket_table tbody");
                 const tfoot = document.querySelector(".basket_table tfoot");
+                const checkout = document.querySelector(".checkout");
 
                 row.remove();
                 document.getElementById("cartNumber").innerText = data.total_quantity;
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     tbody.innerHTML = '<tr><td colspan="6" id="empty_basket">The Basket is currently empty</td></tr>';
                     if (tfoot) tfoot.remove();
+                    if (checkout) checkout.remove();
                 }
             });
 

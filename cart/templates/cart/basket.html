@@ -67,12 +67,27 @@
         </tfoot>
         {% endif %}
     </table>
-    <br><br>
-        {% comment %} <form class="to_checkout_form" action={% url "checkout" %} method="POST">
+
+    {% if items %}
+    <div class="checkout">
+        {% if not request.user.is_authenticated %}
+        <form method="post" action="{% url 'payments:checkout' %}">
             {% csrf_token %}
-            <button type="submit" class="to_checkout">Checkout</button>
-        </form> {% endcomment %}
-    <br><br>
+            <label for="guest_email">Email address:</label>
+            <input type="email" name="guest_email" id="guest_email" required placeholder="Enter your email" />
+            
+            <button type="submit" class="checkout-btn">Checkout</button>
+        </form>
+        {% else %}
+        <!-- Logged-in user goes straight to checkout -->
+        <form method="post" action="{% url 'payments:checkout' %}">
+            {% csrf_token %}
+            <button type="submit" class="checkout-btn">Checkout</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endif %}
+
 </div>
 {% endblock %}
 
