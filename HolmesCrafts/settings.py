@@ -169,7 +169,7 @@ EMAIL_DISPLAY = f"Holmes Crafts <{EMAIL_HOST_USER}>"
 
 MY_EMAIL = env("MY_EMAIL")
 
-SITE_URL = "http://127.0.0.1:8000/"
+SITE_URL = env("SITE_URL")
 
 #stripe keys
 
