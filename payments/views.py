@@ -2,13 +2,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from decimal import Decimal
 import stripe
-import environ
+from django.conf import settings
 
-env = environ.Env()
 
-stripe_pk = env("STRIPE_PUBLISHABLE_KEY")
-stripe_sk = env("STRIPE_SECRET_KEY")
-stripe.api_key = stripe_sk
+stripe.api_key = settings.STRIPE_SK
 
 class CheckoutView(View):
     def post(self, request):
