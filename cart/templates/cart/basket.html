@@ -73,8 +73,10 @@
         {% if not request.user.is_authenticated %}
         <form method="post" action="{% url 'payments:checkout' %}">
             {% csrf_token %}
-            <label for="guest_email">Email address:</label>
-            <input type="email" name="guest_email" id="guest_email" required placeholder="Enter your email" />
+            <div class="form-group">
+                <label for="guest_email">Email address:</label>
+                <input type="email" name="guest_email" id="guest_email" required placeholder="Enter your email" />
+            </div>
             
             <button type="submit" class="checkout-btn">Checkout</button>
         </form>
