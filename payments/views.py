@@ -1,50 +1,72 @@
-from django.shortcuts import render, redirect
-from django.views import View
-from decimal import Decimal
 import stripe
 from django.conf import settings
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.http import require_POST
 
+from cart.utils import get_cart
+from orders.models import Order, OrderItem
 
 stripe.api_key = settings.STRIPE_SK
 
-class CheckoutView(View):
-    def post(self, request):
-        line_items = []
-        cart = request.session.get("cart", {})
-        for product_code, product in cart.items():
-            price = Decimal(product["price"]) * 100
-            line_item = {
-                "price_data": {
-                    "currency": "gbp",
-                    "product_data": {
-                        "name": product["name"],
-                        # "images": [product["image"]],
-                    },
-                    "unit_amount": int(price),
-                },
-                "quantity": product["quantity"],
-            }
-
-            line_items.append(line_item)
-
-
-        session = stripe.checkout.Session.create(
-            line_items = line_items,
-            mode = "payment",
-            success_url="http://127.0.0.1:8000/success",
-            cancel_url="http://127.0.0.1:8000/cancel",
-        )  
-
-        return redirect(session.url, code=303)
+@require_POST
+def create_order_and_checkout_session(request):
+    cart = get_cart(request)
+    if not cart.items.exists():
+        return HttpResponseBadRequest("Cart empty")
     
-class SuccessView(View):
-    def get(self, request):
-        del request.session["cart"]
+    if request.user.is_authenticated:
+        email = request.user.email
+    else:
+        email = request.POST.get("email")
+        if not email:
+            return HttpResponseBadRequest("Guest email required")    
+    
+    order = Order.objects.create(
+        user=request.user if request.user.is_authenticated else None,
+        email=email,
+        total=cart.total_price,
+        status="pending",
+    )
 
-        context = {
-            "nav_bar": set_nav(),
-            "nav_bar_cards": set_nav_cards(),
-            "in_cart": in_basket(self.request),
-        }
-        
-        return render(request, "holmescraftsuk/success.html", context)
+    for item in cart.items.all():
+        OrderItem.objects.create(
+            order=order,
+            product_name=item.product.name,
+            product_id=item.product.id,
+            unit_price=item.product.price,
+            quantity=item.quantity,
+        )
+
+    line_items = []
+    currency = "gbp"
+    for oi in order.items.all():
+        unit_amount = int(oi.unit_price * 100)
+        line_items.append({
+            "price_data": {
+                "currency": currency,
+                "unit_amount": unit_amount,
+                "product_data": {"name": oi.product_name},
+            },
+            "quantity": oi.quantity,
+        })
+
+    success_url = request.build_absolute_uri(reverse("payments:success")) + "?session_id={CHECKOUT_SESSION_ID}"
+    cancel_url = request.build_absolute_uri(reverse("payments:cancel"))
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=line_items,
+        mode="payment",
+        customer_email=email,
+        success_url=success_url,
+        cancel_url=cancel_url,
+        metadata={"order_id": str(order.id)},
+    )
+
+    order.stripe_session_id = session.id
+    order.save()
+
+    return JsonResponse({"sessionId": session.id})
+
