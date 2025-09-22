@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 import json
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.conf import settings
 
 from catalog.models import Product
 from .models import CartItem
@@ -70,5 +71,6 @@ class BasketView(TemplateView):
         cart = get_cart(self.request)
         context["cart"] = cart
         context["items"] = cart.items.all()
+        context["STRIPE_PK"] = settings.STRIPE_PK
         return context
     

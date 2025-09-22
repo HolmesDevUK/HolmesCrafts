@@ -50,3 +50,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const checkoutForm = document.getElementById("checkout-form");
+    const checkoutButton = document.getElementById("checkout-btn");
+
+    if (checkoutForm) {
+        checkoutForm.addEventListener("submit", function (e) {
+            e.preventDefault(); // stop normal form submit
+
+            const formData = new FormData(checkoutForm);
+
+            fetch("/checkout/create-session/", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+                },
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.sessionId) {
+                    const stripe = Stripe("{{ STRIPE_PK }}"); // pass this via template context
+                    return stripe.redirectToCheckout({ sessionId: data.sessionId });
+                } else {
+                    alert("Something went wrong starting checkout.");
+                }
+            })
+            .catch(error => {
+                console.error("Checkout error:", error);
+                alert("There was an error. Please try again.");
+            });
+        });
+    }
+});
+

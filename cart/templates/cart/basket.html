@@ -70,23 +70,18 @@
 
     {% if items %}
     <div class="checkout">
-        {% if not request.user.is_authenticated %}
-        <form method="post" action="{% url 'payments:checkout' %}">
+        <form id="checkout-form" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="guest_email">Email address:</label>
-                <input type="email" name="guest_email" id="guest_email" required placeholder="Enter your email" />
-            </div>
+
+            {% if not request.user.is_authenticated %}
+                <div class="form-group">
+                    <label for="guest_email">Email address:</label>
+                    <input type="email" name="guest_email" id="guest_email" required placeholder="Enter your email" />
+                </div>
+            {% endif %}
             
-            <button type="submit" class="checkout-btn">Checkout</button>
+            <button type="submit" id="checkout-btn" class="checkout-btn">Checkout</button>
         </form>
-        {% else %}
-        <!-- Logged-in user goes straight to checkout -->
-        <form method="post" action="{% url 'payments:checkout' %}">
-            {% csrf_token %}
-            <button type="submit" class="checkout-btn">Checkout</button>
-        </form>
-        {% endif %}
     </div>
     {% endif %}
 
