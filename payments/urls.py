@@ -4,6 +4,8 @@ from . import views
 app_name = "payments"
 
 urlpatterns = [
-    path("checkout/", views.CheckoutView.as_view(), name="checkout"),
-    path("success/", views.SuccessView.as_view(), name="success")
+    path("create-checkout-session/", views.create_order_and_checkout_session, name="create_checkout_session"),
+    path("success/", views.success, name="success"),
+    path("cancel/", views.cancel, name="cancel"),
+    path("webhook/", views.stripe_webhook, name="webhook"),
 ]
