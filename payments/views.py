@@ -1,9 +1,10 @@
 import stripe
 from django.conf import settings
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 from cart.utils import get_cart
 from orders.models import Order, OrderItem
@@ -69,4 +70,34 @@ def create_order_and_checkout_session(request):
     order.save()
 
     return JsonResponse({"sessionId": session.id})
+
+def success(request):
+    return render(request, "payments/success.html")
+
+def cancel(request):
+    return render(request, "payments/cancel.html")
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+    except ValueError:
+        return HttpResponseBadRequest("Invalid payload")
+    except stripe.error.SignatureVerificationError:
+        return HttpResponseBadRequest("Invalid signature")
+    
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+        order_id = session["metadata"]["order_id"]
+
+        try:
+            order = order.objects.get(id=order_id)
+            order.status = "paid"
+            order.save()
+        except Order.DoesNotExist:
+            return HttpResponseBadRequest("Order not found")    
 
