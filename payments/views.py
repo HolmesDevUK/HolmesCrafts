@@ -27,7 +27,7 @@ def create_order_and_checkout_session(request):
     order = Order.objects.create(
         user=request.user if request.user.is_authenticated else None,
         email=email,
-        total=cart.total_price,
+        total=cart.total_price(),
         status="pending",
     )
 

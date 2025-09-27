@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(checkoutForm);
 
-            fetch("/checkout/create-session/", {
+            fetch(checkoutUrl, {
                 method: "POST",
                 headers: {
                     "X-CSRFToken": formData.get("csrfmiddlewaretoken"),

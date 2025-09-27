@@ -89,5 +89,8 @@
 {% endblock %}
 
 {% block script %}
+<script> 
+    const checkoutUrl = "{% url 'payments:create_checkout_session' %}";
+</script>
 <script src="{% static 'cart/scripts/basket.js' %}"></script>
 {% endblock %}
