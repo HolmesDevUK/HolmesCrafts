@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 if (data.sessionId) {
-                    const stripe = Stripe("{{ STRIPE_PK }}"); // pass this via template context
+                    const stripe = Stripe(stripe_pk); // pass this via template context
                     return stripe.redirectToCheckout({ sessionId: data.sessionId });
                 } else {
                     alert("Something went wrong starting checkout.");

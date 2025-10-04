@@ -91,6 +91,7 @@
 {% block script %}
 <script> 
     const checkoutUrl = "{% url 'payments:create_checkout_session' %}";
+    const stripe_pk = "{{STRIPE_PK}}";
 </script>
 <script src="{% static 'cart/scripts/basket.js' %}"></script>
 {% endblock %}

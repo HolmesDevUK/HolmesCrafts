@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from decimal import Decimal
 
 from cart.utils import get_cart
 from orders.models import Order, OrderItem
@@ -43,7 +44,10 @@ def create_order_and_checkout_session(request):
     line_items = []
     currency = "gbp"
     for oi in order.items.all():
-        unit_amount = int(oi.unit_price * 100)
+        unit_amount = int(Decimal(oi.unit_price) * 100)
+        if unit_amount <= 0:
+            return HttpResponseBadRequest("Invalid unit amount")
+        
         line_items.append({
             "price_data": {
                 "currency": currency,
@@ -53,18 +57,24 @@ def create_order_and_checkout_session(request):
             "quantity": oi.quantity,
         })
 
+        if not line_items:
+            return HttpResponseBadRequest("No items to charge")
+
     success_url = request.build_absolute_uri(reverse("payments:success")) + "?session_id={CHECKOUT_SESSION_ID}"
     cancel_url = request.build_absolute_uri(reverse("payments:cancel"))
 
-    session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
-        line_items=line_items,
-        mode="payment",
-        customer_email=email,
-        success_url=success_url,
-        cancel_url=cancel_url,
-        metadata={"order_id": str(order.id)},
-    )
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=line_items,
+            mode="payment",
+            customer_email=email,
+            success_url=success_url,
+            cancel_url=cancel_url,
+            metadata={"order_id": str(order.id)},
+        )
+    except stripe.error.StripeError as e:
+        return JsonResponse({"error": str(e)}, status=400)    
 
     order.stripe_session_id = session.id
     order.save()
@@ -95,9 +105,11 @@ def stripe_webhook(request):
         order_id = session["metadata"]["order_id"]
 
         try:
-            order = order.objects.get(id=order_id)
+            order = Order.objects.get(id=order_id)
             order.status = "paid"
             order.save()
         except Order.DoesNotExist:
             return HttpResponseBadRequest("Order not found")    
+        
+    return JsonResponse({"status": "ok"})    
 
