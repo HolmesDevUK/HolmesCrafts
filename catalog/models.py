@@ -48,6 +48,7 @@ class Product(OrderingMixin, models.Model):
     in_store = models.BooleanField(default=True)
     has_variants = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, related_name="products", blank=True)
+    stripe_product_id = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.code})"
@@ -59,6 +60,10 @@ class Product(OrderingMixin, models.Model):
     @property
     def size(self):
         return self.price_group.size   
+    
+    @property
+    def decription(self):
+        return f"Product: {self.price_group.product_type}, Size: {self.price_group.size}"
     
 
 
