@@ -49,6 +49,7 @@ class Product(OrderingMixin, models.Model):
     has_variants = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, related_name="products", blank=True)
     stripe_product_id = models.CharField(max_length=255, blank=True, null=True)
+    stripe_price_id = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.code})"
