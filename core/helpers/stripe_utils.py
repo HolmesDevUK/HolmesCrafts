@@ -3,14 +3,14 @@ from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SK
 
-def get_or_create_stripe_product(product):
+def get_or_create_stripe_product(product, product_image=None):
     if product.stripe_product_id:
         return product.stripe_product_id
     
     stripe_product = stripe.Product.create(
         name=product.name,
         description=product.description,
-        images=[product.image_url] if product.image_url else None,
+        images=[product_image] if product_image else None,
         metadata={"product_id": product.id},
     )
 
@@ -19,8 +19,8 @@ def get_or_create_stripe_product(product):
 
     return stripe_product.id
 
-def get_or_create_stripe_price(product, unit_amount=None, currency="gdp"):
-    stripe_product_id = get_or_create_stripe_product(product)
+def get_or_create_stripe_price(product, unit_amount=None, currency="gdp", product_image=None):
+    stripe_product_id = get_or_create_stripe_product(product, product_image=product_image)
 
     if unit_amount is None:
         unit_amount = product.price

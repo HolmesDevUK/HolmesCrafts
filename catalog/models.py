@@ -63,7 +63,7 @@ class Product(OrderingMixin, models.Model):
         return self.price_group.size   
     
     @property
-    def decription(self):
+    def description(self):
         return f"Product: {self.price_group.product_type}, Size: {self.price_group.size}"
     
 

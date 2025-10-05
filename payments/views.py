@@ -5,11 +5,12 @@ from django.urls import reverse
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from decimal import Decimal
+import traceback
 
 from cart.utils import get_cart
 from orders.models import Order, OrderItem
 from core.utils import absolute_url
+from core.helpers.stripe_utils import get_or_create_stripe_price, get_or_create_stripe_product
 
 stripe.api_key = settings.STRIPE_SK
 
@@ -34,6 +35,8 @@ def create_order_and_checkout_session(request):
             status="pending",
         )
 
+        line_items = []
+
         for item in cart.items.all():
             order_image = absolute_url(item.display_image, request)
 
@@ -50,26 +53,15 @@ def create_order_and_checkout_session(request):
                 product_image=order_image,
             )
 
-        line_items = []
-        currency = "gbp"
-        for oi in order.items.all():
-            unit_amount = int(Decimal(oi.unit_price) * 100)
-            if unit_amount <= 0:
-                return HttpResponseBadRequest("Invalid unit amount")
+            stripe_price_id = get_or_create_stripe_price(item.product, unit_amount=item.product.price, currency="gbp", product_image=order_image)
+
+        
+        
             
             line_items.append({
-                "price_data": {
-                    "currency": currency,
-                    "unit_amount": unit_amount,
-                    "product_data": {
-                        "name": oi.product_name,
-                        "images": [oi.product_image] if oi.product_image else [],
-                    },
-                },
-                "quantity": oi.quantity,
+                "price": stripe_price_id,
+                "quantity": item.quantity,
             })
-
-        print("Line items images:", [oi.product_image for oi in order.items.all()])
 
         if not line_items:
             return HttpResponseBadRequest("No items to charge")
@@ -88,17 +80,18 @@ def create_order_and_checkout_session(request):
             metadata={"order_id": str(order.id)},
         )  
 
-        print(session)
-
-
         order.stripe_session_id = session.id
         order.save()
 
         return JsonResponse({"sessionId": session.id})
     
     except stripe.error.StripeError as e:
+        print("❌ Stripe error:", e)
+        traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=400)
     except Exception as e:
+        print("❌ Unexpected error:", e)
+        traceback.print_exc()
         return JsonResponse({"error": "Something went wrong: " + str(e)}, status=500)
 
 def success(request):
