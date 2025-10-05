@@ -39,6 +39,7 @@ def create_order_and_checkout_session(request):
             product_id=item.product.id,
             unit_price=item.product.price,
             quantity=item.quantity,
+            product_image=item.display_image,
         )
 
     line_items = []
@@ -52,7 +53,10 @@ def create_order_and_checkout_session(request):
             "price_data": {
                 "currency": currency,
                 "unit_amount": unit_amount,
-                "product_data": {"name": oi.product_name},
+                "product_data": {
+                    "name": oi.product_name,
+                    "images": [oi.product_image] if oi.product_image else [],
+                },
             },
             "quantity": oi.quantity,
         })
