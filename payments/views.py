@@ -9,6 +9,7 @@ from decimal import Decimal
 
 from cart.utils import get_cart
 from orders.models import Order, OrderItem
+from core.utils import absolute_url
 
 stripe.api_key = settings.STRIPE_SK
 
@@ -25,49 +26,58 @@ def create_order_and_checkout_session(request):
         if not email:
             return HttpResponseBadRequest("Guest email required")    
     
-    order = Order.objects.create(
-        user=request.user if request.user.is_authenticated else None,
-        email=email,
-        total=cart.total_price(),
-        status="pending",
-    )
-
-    for item in cart.items.all():
-        OrderItem.objects.create(
-            order=order,
-            product_name=item.product.name,
-            product_id=item.product.id,
-            unit_price=item.product.price,
-            quantity=item.quantity,
-            product_image=item.display_image,
+    try:
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            email=email,
+            total=cart.total_price(),
+            status="pending",
         )
 
-    line_items = []
-    currency = "gbp"
-    for oi in order.items.all():
-        unit_amount = int(Decimal(oi.unit_price) * 100)
-        if unit_amount <= 0:
-            return HttpResponseBadRequest("Invalid unit amount")
-        
-        line_items.append({
-            "price_data": {
-                "currency": currency,
-                "unit_amount": unit_amount,
-                "product_data": {
-                    "name": oi.product_name,
-                    "images": [oi.product_image] if oi.product_image else [],
+        for item in cart.items.all():
+            order_image = absolute_url(item.display_image, request)
+
+            if settings.PLACEHOLDER_IMAGE:
+                order_image = settings.PLACEHOLDER_IMAGE
+
+
+            OrderItem.objects.create(
+                order=order,
+                product_name=item.product.name,
+                product_id=item.product.id,
+                unit_price=item.product.price,
+                quantity=item.quantity,
+                product_image=order_image,
+            )
+
+        line_items = []
+        currency = "gbp"
+        for oi in order.items.all():
+            unit_amount = int(Decimal(oi.unit_price) * 100)
+            if unit_amount <= 0:
+                return HttpResponseBadRequest("Invalid unit amount")
+            
+            line_items.append({
+                "price_data": {
+                    "currency": currency,
+                    "unit_amount": unit_amount,
+                    "product_data": {
+                        "name": oi.product_name,
+                        "images": [oi.product_image] if oi.product_image else [],
+                    },
                 },
-            },
-            "quantity": oi.quantity,
-        })
+                "quantity": oi.quantity,
+            })
+
+        print("Line items images:", [oi.product_image for oi in order.items.all()])
 
         if not line_items:
             return HttpResponseBadRequest("No items to charge")
 
-    success_url = request.build_absolute_uri(reverse("payments:success")) + "?session_id={CHECKOUT_SESSION_ID}"
-    cancel_url = request.build_absolute_uri(reverse("payments:cancel"))
+        success_url = request.build_absolute_uri(reverse("payments:success")) + "?session_id={CHECKOUT_SESSION_ID}"
+        cancel_url = request.build_absolute_uri(reverse("payments:cancel"))
 
-    try:
+        
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=line_items,
@@ -76,14 +86,20 @@ def create_order_and_checkout_session(request):
             success_url=success_url,
             cancel_url=cancel_url,
             metadata={"order_id": str(order.id)},
-        )
+        )  
+
+        print(session)
+
+
+        order.stripe_session_id = session.id
+        order.save()
+
+        return JsonResponse({"sessionId": session.id})
+    
     except stripe.error.StripeError as e:
-        return JsonResponse({"error": str(e)}, status=400)    
-
-    order.stripe_session_id = session.id
-    order.save()
-
-    return JsonResponse({"sessionId": session.id})
+        return JsonResponse({"error": str(e)}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": "Something went wrong: " + str(e)}, status=500)
 
 def success(request):
     return render(request, "payments/success.html")
