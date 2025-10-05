@@ -6,6 +6,15 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.contrib import messages
 
+def absolute_url(url:str, request=None) -> str:
+    if not url:
+        return ""
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    if request:
+        return request.build_absolute_uri(url)
+    return f"{settings.SITE_URL.rstrip('/')}{url}"
+
 def upload_to(instance, filename):
     
     app_name = instance._meta.app_label
