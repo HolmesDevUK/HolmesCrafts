@@ -23,7 +23,9 @@
 <div>
     <h3>Shipping address</h3>
     {% for key, value in shipping_address.items %}
-        <p>{{ value }}</p>
+        {% if value %}
+            <p>{{ value }}</p>
+        {% endif %}
     {% endfor %}
 </div>
 

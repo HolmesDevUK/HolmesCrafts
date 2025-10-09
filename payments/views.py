@@ -2,7 +2,7 @@ import stripe
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import traceback
@@ -106,16 +106,29 @@ def cancel(request):
 
 @csrf_exempt
 def stripe_webhook(request):
+    print("🔔 Webhook received!")
+    
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
     endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
     try:
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
-    except ValueError:
+    except ValueError as e:
+        print("Invalid payload:", e)
         return HttpResponseBadRequest("Invalid payload")
-    except stripe.error.SignatureVerificationError:
+    except stripe.error.SignatureVerificationError as e:
+        print("Invalid signature:", e)
         return HttpResponseBadRequest("Invalid signature")
+    except stripe.error.StripeError as e:
+        print("Stripe API error:", e)
+        return HttpResponseServerError("Stripe API error")
+    except Exception as e:
+        print("Unexpected error:", e)
+        return HttpResponseServerError("Something went wrong")
+    
+    print("Received event:", event["type"])
+    print(event)
     
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
