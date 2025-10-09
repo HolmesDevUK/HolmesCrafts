@@ -5,4 +5,26 @@
 {% block content %}
 <h1>New Order</h1>
 
+<div>
+    <h3>Customer</h3>
+    <p>Name: {{customer.name}}</p>
+    <p>Email: {{customer.email}}</p>
+</div>
+
+<div>
+    <h3>Order</h3>
+    <ul>
+        {% for item in order.items %}
+        <li>{{ item.product_name }} x {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <h3>Shipping address</h3>
+    {% for key, value in shipping_address.items %}
+        <p>{{ value }}</p>
+    {% endfor %}
+</div>
+
 {% endblock %}
