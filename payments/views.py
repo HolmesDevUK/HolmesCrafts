@@ -78,6 +78,9 @@ def create_order_and_checkout_session(request):
             success_url=success_url,
             cancel_url=cancel_url,
             metadata={"order_id": str(order.id)},
+            shipping_address_collection={
+                "allowed_countries": ["GB", "US", "CA"],
+            },
         )  
 
         order.stripe_session_id = session.id
