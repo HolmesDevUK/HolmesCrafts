@@ -10,7 +10,8 @@ import traceback
 from cart.utils import get_cart
 from orders.models import Order, OrderItem
 from core.utils import absolute_url
-from core.helpers.stripe_utils import get_or_create_stripe_price, get_or_create_stripe_product
+from core.helpers.stripe_utils import get_or_create_stripe_price, get_checkout_session_details
+from core.helpers.email_utils import order_confirmation_admin
 
 stripe.api_key = settings.STRIPE_SK
 
@@ -118,14 +119,16 @@ def stripe_webhook(request):
     
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
-        order_id = session["metadata"]["order_id"]
+        session_id = session["id"]
+        
+        data = get_checkout_session_details(session_id)
 
-        try:
-            order = Order.objects.get(id=order_id)
+        order = data["order"]
+        if order:
             order.status = "paid"
             order.save()
-        except Order.DoesNotExist:
-            return HttpResponseBadRequest("Order not found")    
+
+        order_confirmation_admin(data)    
         
     return JsonResponse({"status": "ok"})    
 
