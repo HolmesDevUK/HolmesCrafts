@@ -27,5 +27,16 @@ def merge_carts(user_cart, guest_cart):
             user_item.save()
     guest_cart.delete()
 
+def clear_cart(user=None, session_key=None):
+    
+    try:
+        if user and user.is_authenticated:
+            Cart.objects.filter(user=user).delete()
+        elif session_key:
+            Cart.objects.filter(session_key=session_key, user__isnull=True).delete()
+            
+    except Exception as e:
+        print(f"Error clearing cart: {e}")    
+
 
         

@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import traceback
 
-from cart.utils import get_cart
+from cart.utils import get_cart, clear_cart
 from orders.models import Order, OrderItem
 from core.utils import absolute_url
 from core.helpers.stripe_utils import get_or_create_stripe_price, get_checkout_session_details
@@ -155,6 +155,11 @@ def stripe_webhook(request):
         if order:
             order.status = "paid"
             order.save()
+
+        if order.user:
+            clear_cart(user=order.user)
+        else:
+            clear_cart(session_key=order.session_key)    
 
         order_confirmation_admin(data)    
         
