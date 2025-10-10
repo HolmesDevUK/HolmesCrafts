@@ -12,6 +12,7 @@ from orders.models import Order, OrderItem
 from core.utils import absolute_url
 from core.helpers.stripe_utils import get_or_create_stripe_price, get_checkout_session_details
 from core.helpers.email_utils import order_confirmation_admin
+from core.helpers.messages import alert_error
 
 stripe.api_key = settings.STRIPE_SK
 
@@ -115,7 +116,8 @@ def success(request):
         return HttpResponseBadRequest(f"Error: {str(e)}")
 
 def cancel(request):
-    return render(request, "payments/cancel.html")
+    alert_error(request, "Payment was Cancelled! Please try again.")
+    return redirect("cart:basket")
 
 @csrf_exempt
 def stripe_webhook(request):
