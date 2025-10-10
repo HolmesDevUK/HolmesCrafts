@@ -99,7 +99,20 @@ def create_order_and_checkout_session(request):
         return JsonResponse({"error": "Something went wrong: " + str(e)}, status=500)
 
 def success(request):
-    return render(request, "payments/success.html")
+    session_id = request.GET.get("session_id")
+
+    if not session_id:
+        return HttpResponseBadRequest("Missing session ID")
+
+    try:
+        data = get_checkout_session_details(session_id)
+
+        return render(request, "payments/success.html", {"data": data})
+
+    except stripe.error.StripeError as e:
+        return HttpResponseBadRequest(f"Stripe error: {str(e)}")
+    except Exception as e:
+        return HttpResponseBadRequest(f"Error: {str(e)}")
 
 def cancel(request):
     return render(request, "payments/cancel.html")
