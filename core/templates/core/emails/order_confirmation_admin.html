@@ -14,7 +14,7 @@
 <div>
     <h3>Order</h3>
     <ul>
-        {% for item in order.items %}
+        {% for item in order.items.all %}
         <li>{{ item.product_name }} x {{ item.quantity }}</li>
         {% endfor %}
     </ul>
