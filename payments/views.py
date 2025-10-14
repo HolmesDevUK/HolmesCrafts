@@ -69,7 +69,7 @@ def create_order_and_checkout_session(request):
             return HttpResponseBadRequest("No items to charge")
 
         success_url = request.build_absolute_uri(reverse("payments:success")) + "?session_id={CHECKOUT_SESSION_ID}"
-        cancel_url = request.build_absolute_uri(reverse("payments:cancel"))
+        cancel_url = request.build_absolute_uri(reverse("payments:cancel")) + "?session_id={CHECKOUT_SESSION_ID}"
 
         
         session = stripe.checkout.Session.create(
@@ -116,7 +116,17 @@ def success(request):
         return HttpResponseBadRequest(f"Error: {str(e)}")
 
 def cancel(request):
+    session_id = request.GET.get("session_id")
+
+    data = get_checkout_session_details(session_id)
+
+    order = data["order"]
+    if order:
+        order.status = "cancelled"
+        order.save()
+
     alert_error(request, "Payment was Cancelled! Please try again.")
+
     return redirect("cart:basket")
 
 @csrf_exempt
