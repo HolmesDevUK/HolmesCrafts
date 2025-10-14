@@ -2,6 +2,7 @@ from django.conf import settings
 from datetime import datetime
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from premailer import transform
 
 my_email = settings.MY_EMAIL
 from_email = settings.EMAIL_DISPLAY
@@ -20,6 +21,7 @@ def send_email(subject: str, to_email: str, template_name: str, context: dict = 
         default_context.update(context)
 
     html_content = render_to_string(template_name, default_context)
+    html_content = transform(html_content)
 
     email = EmailMultiAlternatives(
             subject = subject,
