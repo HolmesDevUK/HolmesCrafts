@@ -2,16 +2,22 @@
 
 {% block subject %}New Order | Holmes Crafts{% endblock %}
 
+{% block css %}
+<style>
+    
+</style>
+{% endblock %}
+
 {% block content %}
 <h1>New Order</h1>
 
-<div>
+<div class="section customer">
     <h3>Customer</h3>
     <p>Name: {{customer.name}}</p>
     <p>Email: {{customer.email}}</p>
 </div>
 
-<div>
+<div class="section order">
     <h3>Order</h3>
     <ul>
         {% for item in order.items.all %}
@@ -20,7 +26,7 @@
     </ul>
 </div>
 
-<div>
+<div class="section shipping">
     <h3>Shipping address</h3>
     {% for key, value in shipping_address.items %}
         {% if value %}
