@@ -4,7 +4,7 @@
 
 {% block css %}
 <style>
-    
+
 </style>
 {% endblock %}
 
@@ -21,7 +21,7 @@
     <h3>Order</h3>
     <ul>
         {% for item in order.items.all %}
-        <li>{{ item.product_name }} x {{ item.quantity }}</li>
+        <li><img src="{{ item.product_image }}">{{ item.product_name }} x {{ item.quantity }}</li>
         {% endfor %}
     </ul>
 </div>
