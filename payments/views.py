@@ -153,7 +153,6 @@ def stripe_webhook(request):
         return HttpResponseServerError("Something went wrong")
     
     print("Received event:", event["type"])
-    print(event)
     
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
