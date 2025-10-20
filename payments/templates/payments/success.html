@@ -7,4 +7,18 @@
 {% endblock %}
 
 {% block content %}
+<div class="order_confirmation">
+    <h1>Order Confirmation</h1>
+    <p>Thank You <strong>{{data.customer.name}}</strong> for placing an Order with us.</p>
+    <div class="order">
+        <p>Your Order:</p>
+        <ul>
+        {% for item in data.order.items.all %}
+        <li class="order-item"><img src="{{ item.product_image }}"><span>{{item.product_name }} x {{ item.quantity }}</span></li>
+        {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
 {% endblock %}
