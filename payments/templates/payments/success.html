@@ -13,9 +13,10 @@
     <div class="order">
         <p>Your Order:</p>
         <ul>
-        {% for item in data.order.items.all %}
-        <li class="order-item"><img src="{{ item.product_image }}"><span>{{item.product_name }} x {{ item.quantity }}</span></li>
-        {% endfor %}
+            {% for item in data.order.items.all %}
+            <li class="order-item"><img src="{{ item.product_image }}"><span>{{item.product_name }} x {{ item.quantity }}</span></li>
+            {% endfor %}
+            <li class="order-item">Total: £{{ data.order.total }}</li>
         </ul>
 
     </div>
