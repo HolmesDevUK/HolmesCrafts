@@ -63,3 +63,11 @@ def order_confirmation_admin(data):
         template_name = "core/emails/order_confirmation_admin.html",
         context = data,
     )   
+
+def order_confirmation(user, data):
+    send_email(
+        subject= "Order Confirmation",
+        to_email= user.email,
+        template_name="core/emails/order_confirmation.html",
+        context = data,
+    )    

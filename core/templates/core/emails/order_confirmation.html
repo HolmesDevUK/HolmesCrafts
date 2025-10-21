@@ -1,6 +1,6 @@
 {% extends "core/emails/base_email.html" %}
 
-{% block subject %}New Order | Holmes Crafts{% endblock %}
+{% block subject %}Order Confirmation | Holmes Crafts{% endblock %}
 
 {% block css %}
 <style>
@@ -8,19 +8,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>New Order</h1>
 
 <div class="section customer">
-    <h3>Customer</h3>
-    <p>Name: {{customer.name}}</p>
-    <p>Email: {{customer.email}}</p>
+    <h3>Order Confirmation</h3>
+    <p>Thank You {{customer.name}} for placing an order with Holmes Crafts</p>
 </div>
 
 <div class="section order">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="text-align:center;">
         <tr>
             <td>
-                <h3>Order</h3>
+                <h3>Your Order</h3>
             </td>
         </tr>
         <tr>
@@ -57,15 +55,6 @@
             </td>
         </tr>
     </table>
-</div>
-
-<div class="section shipping">
-    <h3>Shipping address</h3>
-    {% for key, value in shipping_address.items %}
-        {% if value %}
-            <p>{{ value }}</p>
-        {% endif %}
-    {% endfor %}
 </div>
 
 {% endblock %}
