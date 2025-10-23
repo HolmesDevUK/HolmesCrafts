@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-
+{% if notebooks %}
 <a class="pageLink" href="{% url 'catalog:notebooks' %}">
     <div class="Sections" id="Notebooks">
         <h2 class="PageName">Notebooks</h2>
@@ -20,6 +20,8 @@
         </div>
     </div>
 </a>
+{% endif %}
+{% if birthday_cards %}
 <a class="pageLink" href="{% url 'catalog:cards' 'birthday' %}">
     <div class="Sections" id="BirthdayCards">
         <h2 class="PageName">Birthday Cards</h2>
@@ -30,6 +32,8 @@
         </div>
     </div>
 </a>
+{% endif %}
+{% if wedding_cards %}
 <a class="pageLink" href="{% url 'catalog:cards' 'wedding-and-anniversary' %}">
     <div class="Sections" id="WeddingCards">
         <h2 class="PageName">Wedding &amp; Anniversary Cards</h2>
@@ -40,6 +44,8 @@
         </div>
     </div>
 </a>
+{% endif %}
+{% if seasonal_cards %}
 <a class="pageLink" href="{% url 'catalog:cards' 'seasonal' %}">
     <div class="Sections" id="SeasonalCards">
         <h2 class="PageName">Seasonal Cards</h2>
@@ -50,6 +56,8 @@
         </div>
     </div>
 </a>
+{% endif %}
+{% if special_cards %}
 <a class="pageLink" href="{% url 'catalog:cards' 'special-occasion' %}">
     <div class="Sections" id="SpecialCards">
         <h2 class="PageName">Cards for Special Occasions</h2>
@@ -60,6 +68,8 @@
         </div>
     </div>
 </a>
+{% endif %}
+{% if other_cards %}
 <a class="pageLink" href="{% url 'catalog:cards' 'other' %}">
     <div class="Sections" id="OtherCards">
         <h2 class="PageName">Other Cards</h2>
@@ -70,4 +80,5 @@
         </div>
     </div>
 </a>
+{% endif %}
 {% endblock %}
