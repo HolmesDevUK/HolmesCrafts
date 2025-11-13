@@ -1,7 +1,7 @@
 from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView
 
 from .forms import RegisterUserForm, LoginForm
 from .models import CustomUser
@@ -31,3 +31,16 @@ class RegisterView(CreateView):
 class LoginView(LoginView):
      template_name = "accounts/login.html"
      authentication_form = LoginForm 
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = "accounts/registration/password_reset_email.html"
+    success_url = reverse_lazy("accounts:password_reset_done")
+
+    def get_email_context(self, *args, **kwargs):
+        context = super().get_email_context(*args, **kwargs)
+        # force Django to use the correct namespaced URL for confirm
+        context["password_reset_confirm_url"] = reverse_lazy(
+            "accounts:password_reset_confirm",
+            kwargs={"uidb64": context["uid"], "token": context["token"]},
+        )
+        return context     

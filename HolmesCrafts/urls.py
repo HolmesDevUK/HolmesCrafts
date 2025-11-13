@@ -23,8 +23,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(("core.urls", "core"), namespace = "core"), ),
-    path("", include(("accounts.urls", "accounts"), namespace = "accounts"), ),
-    path("", include(("catalog.urls", "catalog"), namespace = "catalog"), ),
+    path("accounts/", include(("accounts.urls", "accounts"), namespace = "accounts"), ),
+    path("catalog", include(("catalog.urls", "catalog"), namespace = "catalog"), ),
     path("basket/", include(("cart.urls", "cart"), namespace = "cart"), ),
     path("orders/", include(("orders.urls", "orders"), namespace = "orders"), ),
     path("payments/", include(("payments.urls", "payments"), namespace="payments"), ),
